@@ -8,21 +8,12 @@ class BitMaskTest : public QObject
 {
     Q_OBJECT
 public:
-    enum class Setup
-    {
-        None
-    };
-
     using QObject::QObject;
 
 private slots:
-    void initTestCase();
-    void init();
-
-    void constructor();
-    void constructor_data();
-
-    void cleanup();
-    void cleanupTestCase();
+    void iterator();
+    void iterator_data();
+    void isEmpty();
+    void isEmpty_data();
 };
 }
