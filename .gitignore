@@ -33,3 +33,4 @@
 
 # Build files
 *.user
+/.autoproject/ADbHash.qbs
