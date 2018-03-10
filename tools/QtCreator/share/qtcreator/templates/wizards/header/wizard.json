@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "supportedProjectTypes": [ ],
+    "id": "A.Header",
+    "category": "ADb",
+    "trDescription": "Creates a C++ header file with ADb namespace.",
+    "trDisplayName": "ADb C++ Header File",
+    "trDisplayCategory": "ADb",
+    "iconText": "h",
+    "enabled": "%{JS: [ %{Plugins} ].indexOf('CppEditor') >= 0}",
+
+    "options": 
+    [ 
+        { "key": "CN", "value": "%{HeaderFile}" },
+        { "key": "TargetPath", "value": "%{Path}/%{CN}.h" }
+    ],
+
+    "pages" :
+    [
+        {
+            "trDisplayName": "Define File",
+            "trShortTitle": "Details",
+            "typeId": "Fields",
+            "data":
+            [
+                {
+                    "name": "HeaderFile",
+                    "trDisplayName": "File Name:",
+                    "mandatory": true,
+                    "type": "LineEdit",
+                    "data": { "validator": "(?:(?:[a-zA-Z_][a-zA-Z_0-9]*::)*[a-zA-Z_][a-zA-Z_0-9]*|)" }
+                },
+                {
+                    "name": "Path",
+                    "type": "PathChooser",
+                    "trDisplayName": "Path:",
+                    "mandatory": true,
+                    "data":
+                    {
+                        "kind": "existingDirectory",
+                        "basePath": "%{InitialPath}",
+                        "path": "%{InitialPath}"
+                    }
+                }
+            ]
+        },
+        {
+            "trDisplayName": "Project Management",
+            "trShortTitle": "Summary",
+            "typeId": "Summary"
+        }
+    ],
+    "generators" :
+    [
+        {
+            "typeId": "File",
+            "data":
+            {
+                "source": "file.h",
+                "target": "%{TargetPath}",
+                "openInEditor": true
+            }
+        }
+    ]
+}
