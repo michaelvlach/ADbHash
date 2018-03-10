@@ -29,9 +29,7 @@ void BitMaskTest::iterator()
     QCOMPARE(actualSetBits, setBits);
 
     if(!setBits.isEmpty())
-    {
         QCOMPARE(*(bitMask.begin()++), setBits.first());
-    }
 }
 
 void BitMaskTest::iterator_data()
