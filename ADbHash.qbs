@@ -68,12 +68,12 @@ Project
         property string name: "ADbHash (autoproject)"
         property string autoprojectDirectory: ".autoproject"
         property string projectRoot: ""
-        property string projectFormat: ProjectFormat.Tree
+        property string projectFormat: ProjectFormat.Flat
         property string dependencyMode: DependencyMode.Default
         property bool dryRun: false
         property string installDirectory: qbs.targetOS + "-" + qbs.architecture + "-" + qbs.toolchain.join("-")
 
-        property string ignorePattern: "\\/(\\.autoproject|\\.git|external)$"
+        property string ignorePattern: "\\/(\\.autoproject|\\.git|external|tools)$"
         property string additionalDirectoriesPattern: "$^"
         property string cppSourcesPattern: "\\.cpp$"
         property string cppHeadersPattern: "\\.h$"
