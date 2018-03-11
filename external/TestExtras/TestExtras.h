@@ -11,4 +11,5 @@ static constexpr char SET_BITS[] = "setBits";
 static constexpr char SIZE[] = "size";
 static constexpr char SIZE_META[] = "sizeMeta";
 static constexpr char VALUE[] = "value";
+static constexpr char VALUES[] = "values";
 }
