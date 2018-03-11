@@ -1,6 +1,8 @@
 #pragma once
 
+#include <Data.h>
 #include <QObject>
+#include <QVector>
 
 namespace adb
 {
@@ -10,19 +12,43 @@ class DataTest : public QObject
 public:
     enum class Setup
     {
-        None
+        None,
+        Empty,
+        Data
+    };
+
+    struct Node
+    {
+        int key = 0;
+        int value = 0;
     };
 
     using QObject::QObject;
 
+    static QVector<Node> createValues();
+    static QVector<char> createMetaValues();
+
 private slots:
-    void initTestCase();
     void init();
 
-    void constructor();
-    void constructor_data();
+    void dataSize();
+    void dataSize_data();
+    void key();
+    void key_data();
+    void metaData();
+    void metaData_data();
+    void metaSize();
+    void metaSize_data();
+    void resize();
+    void resize_data();
+    void setData();
+    void setData_data();
+    void setMetaData();
+    void setMetaData_data();
+    void value();
+    void value_data();
 
-    void cleanup();
-    void cleanupTestCase();
+private:
+    Data<int, int> mData = Data<int, int>(0, 0, 0);
 };
 }

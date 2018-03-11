@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <vector>
 
@@ -13,7 +14,7 @@ public:
 
     int64_t dataSize() const;
     Key key(int64_t index) const;
-    const char *metaData(int64_t index) const;
+    const char *metaData(int64_t index, int64_t size) const;
     int64_t metaSize() const;
     void resize(int64_t dataSize, int64_t metaSize, char metaValue);
     void setData(int64_t index, const Key &key, const Value &value);
@@ -51,7 +52,7 @@ Key Data<Key, Value>::key(int64_t index) const
 }
 
 template<typename Key, typename Value>
-const char *Data<Key, Value>::metaData(int64_t index) const
+const char *Data<Key, Value>::metaData(int64_t index, int64_t size) const
 {
     return &mMetaData[index];
 }
@@ -78,7 +79,7 @@ void Data<Key, Value>::setData(int64_t index, const Key &key, const Value &value
 template<typename Key, typename Value>
 void Data<Key, Value>::setMetaData(int64_t index, const std::vector<char> &values)
 {
-    mMetaData.insert(mMetaData.begin() + index, values.cbegin(), values.cend());
+    std::copy(values.cbegin(), values.cend(), mMetaData.begin() + index);
 }
 
 template<typename Key, typename Value>
