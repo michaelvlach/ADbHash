@@ -1017,7 +1017,7 @@ Project
 
                 file.writeLine("}");
                 file.close();
-                return filePath;
+                return [filePath];
             }
 
             function isProjectFormatFlat()
