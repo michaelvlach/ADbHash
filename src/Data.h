@@ -54,6 +54,7 @@ Key Data<Key, Value>::key(int64_t index) const
 template<typename Key, typename Value>
 const char *Data<Key, Value>::metaData(int64_t index, int64_t size) const
 {
+    (void)size;
     return &mMetaData[index];
 }
 
