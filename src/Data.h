@@ -20,6 +20,7 @@ public:
     void setData(int64_t index, const Key &key, const Value &value);
     void setMetaData(int64_t index, const std::vector<char> &values);
     Value value(int64_t index) const;
+    Value &value(int64_t index);
 
 private:
     struct Node
@@ -85,6 +86,12 @@ void Data<Key, Value>::setMetaData(int64_t index, const std::vector<char> &value
 
 template<typename Key, typename Value>
 Value Data<Key, Value>::value(int64_t index) const
+{
+    return mData[index].value;
+}
+
+template<typename Key, typename Value>
+Value &Data<Key, Value>::value(int64_t index)
 {
     return mData[index].value;
 }

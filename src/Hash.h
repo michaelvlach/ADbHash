@@ -94,7 +94,7 @@ public:
     }
     iterator insert(const Key &key, const Value &value)
     {
-        int32_t hash = Hash(key);
+        uint64_t hash = h(key);
         int64_t pos = findEmpty(hashIndex(hash));
         setMetaValue(pos, metaDataValue(hash));
         mData.setData(pos, key, value);
@@ -251,7 +251,7 @@ private:
 
     void eraseAt(int64_t index)
     {
-        char deletedMetaValue = match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index)) ? static_cast<char>(MetaDataValues::Empty) : static_cast<char>(MetaDataValues::Deleted);
+        char deletedMetaValue = match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index, GROUP_SIZE)) ? static_cast<char>(MetaDataValues::Empty) : static_cast<char>(MetaDataValues::Deleted);
         setMetaValue(index, deletedMetaValue);
         mCount--;
     }
@@ -259,7 +259,7 @@ private:
     {
         while(true)
         {
-            BitMask<int16_t> positions(match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index)) | match(static_cast<char>(MetaDataValues::Deleted), mData.metaData(index)));
+            BitMask<int16_t> positions(match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index, GROUP_SIZE)) | match(static_cast<char>(MetaDataValues::Deleted), mData.metaData(index, GROUP_SIZE)));
 
             if(!positions.isEmpty())
                 return (index + (*positions.begin())) % capacity();
@@ -270,24 +270,24 @@ private:
     int64_t findIndex(const Key &key) const
     {
         auto comparator = [&](int64_t index) { return mData.key(index) == key; };
-        const uint64_t hash = Hash(key);
+        const uint64_t hash = h(key);
         return find(hashIndex(hash), metaDataValue(hash), comparator);
     }
     int64_t findIndex(const Key &key, const Value &value) const
     {
         const auto comparator = [&](int64_t index) { return mData.key(index) == key && mData.value(index) == value; };
-        const uint64_t hash = Hash(key);
+        const uint64_t hash = h(key);
         return find(hashIndex(hash), metaDataValue(hash), comparator);
     }
     int64_t find(int64_t index, char metaValue, std::function<bool(int64_t)> compare) const
     {
         while(true)
         {
-            for(int i : BitMask<int16_t>(match(metaValue, mData.metaData(index))))
+            for(int i : BitMask<int16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE))))
                 if(compare(index + i))
                     return index + i;
 
-            if(match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index)))
+            if(match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index, GROUP_SIZE)))
                 return mCount;
 
             index = (index + GROUP_SIZE) % capacity();
@@ -296,13 +296,13 @@ private:
     std::vector<int64_t> findAll(const Key &key) const
     {
         const auto comparator = [&](int64_t index) { return mData.key(index) == key; };
-        const uint64_t hash = Hash(key);
+        const uint64_t hash = h(key);
         return findAll(hashIndex(hash), metaDataValue(hash), comparator);
     }
     std::vector<int64_t> findAll(const Key &key, const Value &value) const
     {
         const auto comparator = [&](int64_t index) { return mData.key(index) == key && mData.value(index) == value; };
-        const uint64_t hash = Hash(key);
+        const uint64_t hash = h(key);
         return findAll(hashIndex(hash), metaDataValue(hash), comparator);
     }
     std::vector<int64_t> findAll(int64_t index, char metaValue, std::function<bool(int64_t)> compare) const
@@ -311,11 +311,11 @@ private:
 
         while(true)
         {
-            for(int i : BitMask<int16_t>(match(metaValue, mData.metaData(index))))
+            for(int i : BitMask<int16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE))))
                 if(compare(index + i))
                     indexes.emplace_back(index + i);
 
-            if(match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index)))
+            if(match(static_cast<char>(MetaDataValues::Empty), mData.metaData(index, GROUP_SIZE)))
                 return indexes;
 
             index = (index + GROUP_SIZE) % capacity();
@@ -323,13 +323,13 @@ private:
     }
     int64_t findNext(int64_t index) const
     {
-        while(++index < capacity() && (*mData.metaData(index) >> 7) != static_cast<char>(MetaDataValues::Valid))
+        while(++index < capacity() && (*mData.metaData(index, 1) >> 7) != static_cast<char>(MetaDataValues::Valid))
             ;
         return index;
     }
     int64_t findPrevious(int64_t index) const
     {
-        while(0 < --index && (*mData.metaData(index) >> 7) != static_cast<char>(MetaDataValues::Valid))
+        while(0 < --index && (*mData.metaData(index, 1) >> 7) != static_cast<char>(MetaDataValues::Valid))
             ;
         return index;
     }
@@ -372,14 +372,14 @@ private:
     }
     void rehashIndex(int64_t index)
     {
-        if(*mData.metaData(index) == static_cast<char>(MetaDataValues::Deleted))
+        if(*mData.metaData(index, 1) == static_cast<char>(MetaDataValues::Deleted))
             setMetaValue(index, MetaDataValues::Empty);
         else
             reinsert(index);
     }
     int64_t reinsert(int64_t index)
     {
-        uint64_t hash = Hash(mData.key(index));
+        uint64_t hash = h(mData.key(index));
         int64_t newPos = hashIndex(hash % capacity());
 
         if(index != newPos)
@@ -389,7 +389,7 @@ private:
     }
     int64_t reinsert(int64_t index, int64_t newPos)
     {
-        char metaValue = *mData.metaData(index);
+        char metaValue = *mData.metaData(index, 1);
         Key k = mData.key(index);
         Value v = mData.value(index);
         setMetaValue(index, MetaDataValues::Empty);
@@ -402,7 +402,7 @@ private:
     {
         while(true)
         {
-            if((mData.metaData(index)[0] == static_cast<char>(MetaDataValues::Empty) || mData.metaData(index)[0] == static_cast<char>(MetaDataValues::Deleted)) || reinsert(index) != index)
+            if((mData.metaData(index, 1)[0] == static_cast<char>(MetaDataValues::Empty) || mData.metaData(index, 1)[0] == static_cast<char>(MetaDataValues::Deleted)) || reinsert(index) != index)
                 return index;
 
             index = (index + 1) % capacity();
@@ -411,14 +411,14 @@ private:
     void resize(int64_t size)
     {
         int64_t pos = capacity();
-        const char *lastGroupPos = mData.metaData(pos);
+        const char *lastGroupPos = mData.metaData(pos, GROUP_SIZE);
         char lastGroup[GROUP_SIZE] = {};
         memcpy(lastGroup, lastGroupPos, GROUP_SIZE);
 
         mData.resize(size, size + GROUP_SIZE, static_cast<char>(MetaDataValues::Empty));
 
         mData.setMetaData(pos, std::vector<char>(GROUP_SIZE, static_cast<char>(MetaDataValues::Empty)));
-        lastGroupPos = mData.metaData(mData.dataSize());
+        lastGroupPos = mData.metaData(mData.dataSize(), GROUP_SIZE);
         memcpy(const_cast<char *>(lastGroupPos), lastGroup, GROUP_SIZE);
     }
     bool isOverMaxLoadFactor() const
@@ -435,17 +435,18 @@ private:
     }
     void setMetaValue(int64_t index, char value)
     {
-        mData.setMetaData(index, {value});
+        mData.setMetaData(index, std::vector<char>{value});
 
         if(index < GROUP_SIZE)
-            mData.setMetaData(mData.dataSize() + index, {value});
+            mData.setMetaData(mData.dataSize() + index, std::vector<char>{value});
     }
     int64_t capacity() const
     {
         return mData.dataSize();
     }
 
+    HashFunction h;
     int64_t mCount = 0;
-    DataType mData = HashData(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaDataValues::Empty));
+    DataType mData = DataType(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaDataValues::Empty));
 };
 }
