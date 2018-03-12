@@ -228,7 +228,7 @@ void HashTest::insert()
     QFETCH(ValuesList, values);
 
     for(const QPair<qint64, qint64> &keyValue : values)
-        QCOMPARE(*mHash.insert(keyValue.first, keyValue.second).operator->(), keyValue.second);
+        QCOMPARE(*mHash.insert(keyValue.first, keyValue.second), keyValue.second);
 
     QTEST(mHash.count(), COUNT);
 }
