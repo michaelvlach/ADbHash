@@ -173,6 +173,26 @@ void DataTest::setData_data()
     QTest::newRow("Set value in data with values overwrites the existing value") << Setup::Data << int64_t(1) << -10 << -100;
 }
 
+void DataTest::setData_value()
+{
+    QFETCH(int64_t, index);
+    QFETCH(int, value);
+
+    mData.setData(index, value);
+
+    QCOMPARE(mData.value(index), value);
+}
+
+void DataTest::setData_value_data()
+{
+    QTest::addColumn<Setup>(SETUP);
+    QTest::addColumn<int64_t>(INDEX);
+    QTest::addColumn<int>(VALUE);
+
+    QTest::newRow("Set value in default constructed data") << Setup::Empty << int64_t(1) << -100;
+    QTest::newRow("Set value in data with values overwrites the existing value") << Setup::Data << int64_t(1) << -100;
+}
+
 void DataTest::setMetaData()
 {
     QFETCH(int64_t, index);

@@ -18,9 +18,9 @@ public:
     int64_t metaSize() const;
     void resize(int64_t dataSize, int64_t metaSize, char metaValue);
     void setData(int64_t index, const Key &key, const Value &value);
+    void setData(int64_t index, const Value &value);
     void setMetaData(int64_t index, const std::vector<char> &values);
     Value value(int64_t index) const;
-    Value &value(int64_t index);
 
 private:
     struct Node
@@ -79,6 +79,12 @@ void Data<Key, Value>::setData(int64_t index, const Key &key, const Value &value
 }
 
 template<typename Key, typename Value>
+void Data<Key, Value>::setData(int64_t index, const Value &value)
+{
+    mData[index].value = value;
+}
+
+template<typename Key, typename Value>
 void Data<Key, Value>::setMetaData(int64_t index, const std::vector<char> &values)
 {
     std::copy(values.cbegin(), values.cend(), mMetaData.begin() + index);
@@ -86,12 +92,6 @@ void Data<Key, Value>::setMetaData(int64_t index, const std::vector<char> &value
 
 template<typename Key, typename Value>
 Value Data<Key, Value>::value(int64_t index) const
-{
-    return mData[index].value;
-}
-
-template<typename Key, typename Value>
-Value &Data<Key, Value>::value(int64_t index)
 {
     return mData[index].value;
 }
