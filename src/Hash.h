@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BitMask.h"
+#include "Reference.h"
 
 #include <cstdint>
 #include <emmintrin.h>
@@ -14,12 +15,12 @@ namespace adb
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 class Hash
 {
-    template<typename ValueType, typename HashType>
+    template<typename ValueType, typename ReferenceType, typename HashType>
     class iterator_base;
 
 public:
-    using iterator = iterator_base<Value, Hash>;
-    using const_iterator = iterator_base<const Value, const Hash>;
+    using iterator = iterator_base<Value, Reference<Value, DataType>, Hash>;
+    using const_iterator = iterator_base<const Value, const Reference<const Value, const DataType>, const Hash>;
 
     Hash() = default;
     Hash(std::initializer_list<std::pair<Key, Value>> list)
@@ -106,9 +107,9 @@ public:
     {
         return mCount == 0;
     }
-    Value &operator[](const Key &key)
+    Reference<Value, DataType> operator[](const Key &key)
     {
-        return mData.value(findIndex(key));
+        return Reference<Value, DataType>(mData, findIndex(key));
     }
     Value operator[](const Key &key) const
     {
@@ -170,13 +171,13 @@ public:
 private:
     static constexpr int64_t GROUP_SIZE = 16;
 
-    template<typename ValueType, typename HashType>
+    template<typename ValueType, typename ReferenceType, typename HashType>
     class iterator_base
     {
     public:
         using value_type = ValueType;
         using pointer = value_type *;
-        using reference = value_type &;
+        using reference = ReferenceType;
         using difference_type = ptrdiff_t;
         using iterator_category = std::bidirectional_iterator_tag;
 
@@ -227,11 +228,7 @@ private:
         }
         reference operator*() const
         {
-            return mHash->mData.value(mIndex);
-        }
-        pointer operator->() const
-        {
-            return &(**this);
+            return reference(mHash->mData, mIndex);
         }
 
     private:
