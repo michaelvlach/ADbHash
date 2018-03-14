@@ -124,12 +124,12 @@ private:
     {
         while(true)
         {
-            BitMask<int16_t> positions(match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)) | match(static_cast<char>(MetaValues::Deleted), mData.metaData(index, GROUP_SIZE)));
+            BitMask<uint16_t> positions(match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)) | match(static_cast<char>(MetaValues::Deleted), mData.metaData(index, GROUP_SIZE)));
 
             if(!positions.isEmpty())
                 return (index + (*positions.begin())) % capacity();
 
-            index = (index + GROUP_SIZE) % capacity();
+            index = nextIndex(index);
         }
     }
     int64_t findIndex(const Key &key) const
@@ -147,14 +147,14 @@ private:
     {
         while(true)
         {
-            for(int i : BitMask<int16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE))))
+            for(int i : BitMask<uint16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE))))
                 if(compare(index + i))
                     return index + i;
 
-            if(match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)))
+            if(!isGroupFull(index))
                 return mCount;
 
-            index = (index + GROUP_SIZE) % capacity();
+            index = nextIndex(index);
         }
     }
     std::vector<int64_t> findAll(const Key &key) const
@@ -174,18 +174,16 @@ private:
 
         while(true)
         {
-            for(int i : BitMask<int16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE))))
+            for(int i : BitMask<uint16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE))))
                 if(compare(index + i))
                     indexes.emplace_back(index + i);
 
-            if(match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)))
+            if(!isGroupFull(index))
                 return indexes;
 
-            index = (index + GROUP_SIZE) % capacity();
+            index = nextIndex(index);
         }
     }
-
-
 
     int64_t capacity() const { return mData.dataSize(); }
     int64_t findNext(int64_t index = -1) const
@@ -204,10 +202,10 @@ private:
 
         return index;
     }
-    int64_t freeIndex(int32_t index, int64_t newSize)
+    int64_t freeIndex(int64_t index, int64_t newSize)
     {
         while(!isFree(index) && reinsert(index, newSize) == index)
-            index = nextIndex(index, capacity());
+            index = nextIndex(index, newSize);
 
         return index;
     }
@@ -222,6 +220,7 @@ private:
     bool isBewloMinCount() const { return mCount < minCount(); }
     bool isEmpty(int64_t index) const { return *mData.metaData(index, 1) == static_cast<char>(MetaValues::Empty); }
     bool isFree(int64_t index) const { return isEmpty(index) || isDeleted(index); }
+    bool isGroupFull(int64_t index) const { return match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)) != 0; }
     bool isDeleted(int64_t index) const { return *mData.metaData(index, 1) == static_cast<char>(MetaValues::Deleted); }
     bool isOverMaxCount() const { return mCount >= maxCount(); }
     bool isValid(int64_t index) const { return (*mData.metaData(index, 1) >> 7) != static_cast<char>(MetaValues::Valid); }
@@ -229,6 +228,8 @@ private:
     static auto keyValueComparator(const Key &key, const Value &val, const DataType &data) { return [&key, &val, &data](int64_t index) { return data.key(index) == key && data.value(index) == val; }; }
     int64_t maxCount() const { return capacity() * 15 / 16; }
     int64_t minCount() const { return capacity() * 7 / 16; }
+    int64_t nextIndex(int64_t index) const { return nextIndex(index, capacity()); }
+    int64_t nextIndex(int64_t index, int64_t size) const { return (index + GROUP_SIZE) % size; }
     int64_t reinsert(int64_t index, int64_t newSize)
     {
         Key key = mData.key(index);
@@ -266,7 +267,7 @@ private:
         else if(!isFree(index))
             reinsert(index, newSize);
     }
-    void rehashIndexes(int32_t size, int64_t newSize)
+    void rehashIndexes(int64_t size, int64_t newSize)
     {
         for(int64_t index = 0; index < size; index++)
             rehashIndex(index, newSize);

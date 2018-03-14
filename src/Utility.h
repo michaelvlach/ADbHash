@@ -21,9 +21,4 @@ inline char hashMetaValue(uint64_t hash)
 {
     return hash & static_cast<char>(0b01111111);
 }
-
-inline int64_t nextIndex(int64_t index, int64_t size)
-{
-    return (index + 1) % size;
-}
 }
