@@ -43,6 +43,8 @@ private slots:
     void resize_data();
     void setData();
     void setData_data();
+    void setData_value();
+    void setData_value_data();
     void setMetaData();
     void setMetaData_data();
     void value();

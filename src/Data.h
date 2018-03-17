@@ -18,6 +18,7 @@ public:
     int64_t metaSize() const;
     void resize(int64_t dataSize, int64_t metaSize, char metaValue);
     void setData(int64_t index, const Key &key, const Value &value);
+    void setData(int64_t index, const Value &value);
     void setMetaData(int64_t index, const std::vector<char> &values);
     Value value(int64_t index) const;
 
@@ -54,6 +55,7 @@ Key Data<Key, Value>::key(int64_t index) const
 template<typename Key, typename Value>
 const char *Data<Key, Value>::metaData(int64_t index, int64_t size) const
 {
+    (void)size;
     return &mMetaData[index];
 }
 
@@ -74,6 +76,12 @@ template<typename Key, typename Value>
 void Data<Key, Value>::setData(int64_t index, const Key &key, const Value &value)
 {
     mData[index] = Node{key, value};
+}
+
+template<typename Key, typename Value>
+void Data<Key, Value>::setData(int64_t index, const Value &value)
+{
+    mData[index].value = value;
 }
 
 template<typename Key, typename Value>
