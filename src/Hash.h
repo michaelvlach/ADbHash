@@ -95,13 +95,10 @@ public:
     }
     iterator insert(const Key &key, const Value &value)
     {
-        const uint64_t hash = mHashFunction(key);
-        const int64_t pos = findEmpty(hashIndex(hash, capacity()));
-        setMetaValue(pos, hashMetaValue(hash));
-        mData.setData(pos, key, value);
         mCount++;
         rehash();
-        return iterator(pos, this);
+        const uint64_t hash = HashFunction(key);
+        return iterator(insertData(findEmpty(hashIndex(hash, capacity())), key, value, hashMetaValue(hash)), this);
     }
     bool isEmpty() const
     {
@@ -109,7 +106,8 @@ public:
     }
     Reference<Value, DataType> operator[](const Key &key)
     {
-        return Reference<Value, DataType>(mData, findIndex(key));
+        const int64_t index = findIndex(key);
+        return Reference<Value, DataType>(mData, index < capacity() ? index : insert(key, Value()).mIndex);
     }
     Value operator[](const Key &key) const
     {
@@ -268,12 +266,12 @@ private:
     }
     int64_t findIndex(const Key &key) const
     {
-        const uint64_t hash = mHashFunction(key);
+        const uint64_t hash = HashFunction(key);
         return find(hashIndex(hash, capacity()), hashMetaValue(hash), keyComparator(key, mData));
     }
     int64_t findIndex(const Key &key, const Value &value) const
     {
-        const uint64_t hash = mHashFunction(key);
+        const uint64_t hash = HashFunction(key);
         return find(hashIndex(hash, capacity()), hashMetaValue(hash), keyValueComparator(key, value, mData));
     }
     template<typename Comparator>
@@ -282,23 +280,23 @@ private:
         while(true)
         {
             for(int i : findPositions(index, metaValue))
-                if(compare(index + i))
-                    return index + i;
+                if(compare(dataIndex(index + i)))
+                    return dataIndex(index + i);
 
             if(!isGroupFull(index))
-                return mCount;
+                return capacity();
 
             index = nextGroupIndex(index);
         }
     }
     std::vector<int64_t> findAll(const Key &key) const
     {
-        const uint64_t hash = mHashFunction(key);
+        const uint64_t hash = HashFunction(key);
         return findAll(hashIndex(hash, capacity()), hashMetaValue(hash), keyComparator(key, mData));
     }
     std::vector<int64_t> findAll(const Key &key, const Value &value) const
     {
-        const uint64_t hash = mHashFunction(key);
+        const uint64_t hash = HashFunction(key);
         return findAll(hashIndex(hash, capacity()), hashMetaValue(hash), keyValueComparator(key, value, mData));
     }
     template<typename Comparator>
@@ -309,8 +307,8 @@ private:
         while(true)
         {
             for(int i : findPositions(index, metaValue))
-                if(compare(index + i))
-                    indexes.emplace_back(index + i);
+                if(compare(dataIndex(index + i)))
+                    indexes.emplace_back(dataIndex(index + i));
 
             if(!isGroupFull(index))
                 return indexes;
@@ -342,7 +340,7 @@ private:
     int64_t freeIndex(int64_t index, int64_t newSize)
     {
         while(!isFree(index) && reinsert(index, newSize) == index)
-            index = nextGroupIndex(index, newSize);
+            index = nextIndex(index, newSize);
 
         return index;
     }
@@ -364,6 +362,10 @@ private:
     {
         return BitMask<uint16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE)));
     }
+    int64_t dataIndex(int64_t index) const
+    {
+        return index % capacity();
+    }
     int64_t insertData(int64_t index, const Key &key, const Value &value, char metaValue)
     {
         setMetaValue(index, metaValue);
@@ -384,7 +386,7 @@ private:
     }
     bool isGroupFull(int64_t index) const
     {
-        return match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)) != 0;
+        return match(static_cast<char>(MetaValues::Empty), mData.metaData(index, GROUP_SIZE)) == 0;
     }
     bool isDeleted(int64_t index) const
     {
@@ -396,7 +398,7 @@ private:
     }
     bool isValid(int64_t index) const
     {
-        return (*mData.metaData(index, 1) >> 7) != static_cast<char>(MetaValues::Valid);
+        return (*mData.metaData(index, 1) >> 7) == static_cast<char>(MetaValues::Valid);
     }
     static auto keyComparator(const Key &key, const DataType &data)
     {
@@ -422,10 +424,18 @@ private:
     {
         return (index + GROUP_SIZE) % size;
     }
+    int64_t nextIndex(int64_t index) const
+    {
+        return nextIndex(index, capacity());
+    }
+    int64_t nextIndex(int64_t index, int64_t size) const
+    {
+        return (index + 1) % size;
+    }
     int64_t reinsert(int64_t index, int64_t newSize)
     {
         Key key = mData.key(index);
-        int64_t newPos = hashIndex(mHashFunction(key), newSize);
+        int64_t newPos = hashIndex(HashFunction(key), newSize);
         return newPos == index ? index : reinsert(index, newPos, key, newSize);
     }
     int64_t reinsert(int64_t index, int64_t newIndex, const Key &key, int64_t newSize)
@@ -466,6 +476,7 @@ private:
     }
     void resize(int64_t size)
     {
+        mData.setMetaData(mData.dataSize(), std::vector<char>(GROUP_SIZE, static_cast<char>(MetaValues::Empty)));
         mData.resize(size, size + GROUP_SIZE, static_cast<char>(MetaValues::Empty));
         mData.setMetaData(size, std::vector<char>(mData.metaData(0, GROUP_SIZE), mData.metaData(0, GROUP_SIZE) + GROUP_SIZE));
     }
@@ -496,7 +507,6 @@ private:
         return value;
     }
 
-    HashFunction mHashFunction;
     int64_t mCount = 0;
     DataType mData = DataType(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaValues::Empty));
 };
