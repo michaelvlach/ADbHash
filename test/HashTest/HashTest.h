@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Hash.h>
 #include <Data.h>
-
+#include <Hash.h>
 #include <QObject>
 #include <QPair>
 #include <QVector>
@@ -69,7 +68,17 @@ private slots:
     void values_data();
 
 private:
-    uint64_t(*mHashFunction)(qint64) = [](qint64 value) -> uint64_t { return static_cast<uint64_t>(value); };
-    Hash<qint64, qint64, Data<qint64, qint64>, decltype(mHashFunction)> mHash;
+    struct HashFunction
+    {
+    public:
+        HashFunction(qint64 value);
+
+        operator uint64_t() const;
+
+    private:
+        qint64 mValue = 0;
+    };
+
+    Hash<qint64, qint64, Data<qint64, qint64>, HashFunction> mHash;
 };
 }

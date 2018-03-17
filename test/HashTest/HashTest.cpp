@@ -1,8 +1,7 @@
 #include "HashTest.h"
 
-#include <TestExtras.h>
-
 #include <QTest>
+#include <TestExtras.h>
 
 Q_DECLARE_METATYPE(adb::HashTest::Setup)
 QTEST_APPLESS_MAIN(adb::HashTest)
@@ -39,7 +38,7 @@ void HashTest::init()
 
     if(setup == Setup::Multi)
     {
-        for(const QPair<qint64, qint64> &keyValue : createSameHashValues())
+        for(const QPair<qint64, qint64> &keyValue : SORTED_MULTI_VALUES)
             mHash.insert(keyValue.first, keyValue.second);
     }
 }
@@ -95,9 +94,7 @@ void HashTest::const_iterator()
             actualValues.append({it.key(), it.value()});
 
         QVector<QPair<qint64, qint64>> sortedValues = actualValues;
-        std::sort(sortedValues.begin(), sortedValues.end(), [](const QPair<qint64, qint64> &left, const QPair<qint64, qint64> &right) {
-            return left.first < right.first;
-        });
+        std::sort(sortedValues.begin(), sortedValues.end(), [](const QPair<qint64, qint64> &left, const QPair<qint64, qint64> &right) { return left.first != right.first ? left.first < right.first : left.second < right.second; });
 
         QTEST(sortedValues, VALUES);
     }
@@ -183,7 +180,7 @@ void HashTest::contains_value_data()
     QTest::newRow("Empty hash should not contain any key-value pair") << Setup::None << qint64(1) << qint64(1100) << false;
     QTest::newRow("Hash with data should contain the key-value pair") << Setup::Data << qint64(1) << qint64(1100) << true;
     QTest::newRow("Hash with removed data should not contain removed key-value pair") << Setup::Removed << qint64(1) << qint64(1100) << false;
-    QTest::newRow("Hash with multi key data should contain the key-value pair") << Setup::Multi << qint64(12) << qint64(8) << true;
+    QTest::newRow("Hash with multi key data should contain the key-value pair") << Setup::Multi << qint64(12) << qint64(10) << true;
 }
 
 void HashTest::count()
@@ -199,7 +196,7 @@ void HashTest::count_data()
     QTest::newRow("Empty hash should have count 0") << Setup::None << qint64(0);
     QTest::newRow("Hash with data should have count 100") << Setup::Data << qint64(100);
     QTest::newRow("Hash with removed data should should have count 67") << Setup::Removed << qint64(67);
-    QTest::newRow("Hash with multi key data should should have count 30") << Setup::Removed << qint64(30);
+    QTest::newRow("Hash with multi key data should should have count 30") << Setup::Multi << qint64(30);
 }
 
 void HashTest::count_key()
@@ -218,7 +215,7 @@ void HashTest::count_key_data()
     QTest::newRow("Empty hash should have count of the key 0") << Setup::None << qint64(12) << qint64(0);
     QTest::newRow("Hash with data should have the count of the key 1") << Setup::Data << qint64(12) << qint64(1);
     QTest::newRow("Hash with removed data should should have count of removed key 0") << Setup::Removed << qint64(1) << qint64(0);
-    QTest::newRow("Hash with multi key data should should have count of the key 3") << Setup::Removed << qint64(12) << qint64(3);
+    QTest::newRow("Hash with multi key data should should have count of the key 3") << Setup::Multi << qint64(12) << qint64(3);
 }
 
 void HashTest::insert()
@@ -520,8 +517,7 @@ QVector<QPair<qint64, qint64>> HashTest::createSameHashValues()
 {
     //This makes sure that there is more than 16 values that will
     //hash into the same group starting with the empty hash
-    return QVector<QPair<qint64, qint64>>
-    {
+    return QVector<QPair<qint64, qint64>>{
         {1, 2},
         {3, 4},
         {5, 6},
@@ -538,16 +534,14 @@ QVector<QPair<qint64, qint64>> HashTest::createSameHashValues()
         {27, 28},
         {29, 30},
         {31, 32},
-        {33, 34}
-};
+        {33, 34}};
 }
 
-QVector<QPair<qint64, qint64> > HashTest::createSameHashValuesAfterRehashing()
+QVector<QPair<qint64, qint64>> HashTest::createSameHashValuesAfterRehashing()
 {
     //This makes sure that after rehashing from 32 capacity to 64 capacity
     //there will be more than 16 values hashing into the same group
-    return QVector<QPair<qint64, qint64>>
-    {
+    return QVector<QPair<qint64, qint64>>{
         {4, 2},
         {8, 4},
         {12, 6},
@@ -577,14 +571,12 @@ QVector<QPair<qint64, qint64> > HashTest::createSameHashValuesAfterRehashing()
         {108, 34},
         {112, 34},
         {116, 34},
-        {120, 34}
-    };
+        {120, 34}};
 }
 
-QVector<QPair<qint64, qint64> > HashTest::createMultiHashValues()
+QVector<QPair<qint64, qint64>> HashTest::createMultiHashValues()
 {
-    return QVector<QPair<qint64, qint64>>
-    {
+    return QVector<QPair<qint64, qint64>>{
         {4, 2},
         {8, 4},
         {12, 6},
@@ -614,7 +606,16 @@ QVector<QPair<qint64, qint64> > HashTest::createMultiHashValues()
         {100, 34},
         {100, 36},
         {100, 37},
-        {120, 38}
-    };
+        {120, 38}};
+}
+
+HashTest::HashFunction::HashFunction(qint64 value) :
+    mValue(value)
+{
+}
+
+adb::HashTest::HashFunction::operator uint64_t() const
+{
+    return static_cast<uint64_t>(mValue);
 }
 }
