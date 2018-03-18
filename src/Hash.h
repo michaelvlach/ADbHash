@@ -2,12 +2,11 @@
 
 #include "BitMask.h"
 #include "Reference.h"
-#include "Utility.h"
+#include "SIMD.h"
 
 #include <cstdint>
-#include <emmintrin.h>
+#include <iterator>
 #include <initializer_list>
-#include <string.h>
 #include <vector>
 
 namespace adb
@@ -88,7 +87,8 @@ private:
     {
         Empty = static_cast<char>(0b10000000),
         Deleted = static_cast<char>(0b11111110),
-        Valid = static_cast<char>(0b00000000)
+        Valid = static_cast<char>(0b00000000),
+        Mask = static_cast<char>(0b01111111)
     };
 
     int64_t dataIndex(int64_t index) const;
@@ -111,6 +111,8 @@ private:
     void grow(int64_t oldSize, int64_t newSize);
     BitMask<uint16_t> findEmptyPositions(int64_t index) const;
     BitMask<uint16_t> findPositions(int64_t index, char metaValue) const;
+    static int64_t hashIndex(uint64_t hash, int64_t size);
+    static char hashMetaValue(uint64_t hash);
     int64_t insertData(int64_t index, const Key &key, const Value &value, char metaValue);
     bool isBewloMinCount() const;
     bool isEmpty(int64_t index) const;
@@ -487,6 +489,18 @@ template<typename Key, typename Value, typename DataType, typename HashFunction>
 BitMask<uint16_t> Hash<Key, Value, DataType, HashFunction>::findPositions(int64_t index, char metaValue) const
 {
     return BitMask<uint16_t>(match(metaValue, mData.metaData(index, GROUP_SIZE)));
+}
+
+template<typename Key, typename Value, typename DataType, typename HashFunction>
+int64_t Hash<Key, Value, DataType, HashFunction>::hashIndex(uint64_t hash, int64_t size)
+{
+    return static_cast<int64_t>(hash % static_cast<uint64_t>(size));
+}
+
+template<typename Key, typename Value, typename DataType, typename HashFunction>
+char Hash<Key, Value, DataType, HashFunction>::hashMetaValue(uint64_t hash)
+{
+    return hash & static_cast<char>(MetaValues::Mask);
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
