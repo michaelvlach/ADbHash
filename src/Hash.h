@@ -668,10 +668,10 @@ void Hash<Key, Value, DataType, HashFunction>::setMetaValue(int64_t index, Hash<
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 void Hash<Key, Value, DataType, HashFunction>::setMetaValue(int64_t index, char value)
 {
-    mData.setMetaData(index, std::vector<char>{value});
+    mData.setMetaData(index, value);
 
     if(index < GROUP_SIZE)
-        mData.setMetaData(mData.dataSize() + index, std::vector<char>{value});
+        mData.setMetaData(mData.dataSize() + index, value);
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
