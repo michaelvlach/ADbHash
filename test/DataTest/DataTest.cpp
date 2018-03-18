@@ -213,6 +213,26 @@ void DataTest::setMetaData_data()
     QTest::newRow("Set meta values in data with values should overwrite existing values") << Setup::Data << int64_t(1) << QVector<char>{1, 2, 3, 4, 5};
 }
 
+void DataTest::setMetaData_value()
+{
+    QFETCH(int64_t, index);
+    QFETCH(char, value);
+
+    mData.setMetaData(index, value);
+
+    QCOMPARE(*mData.metaData(index, 1), value);
+}
+
+void DataTest::setMetaData_value_data()
+{
+    QTest::addColumn<Setup>(SETUP);
+    QTest::addColumn<int64_t>(INDEX);
+    QTest::addColumn<char>(VALUE);
+
+    QTest::newRow("Set meta value in default constructed data") << Setup::Empty << int64_t(1) << char(-1);
+    QTest::newRow("Set meta value in data with values should overwrite existing value") << Setup::Data << int64_t(1) << char(1);
+}
+
 void DataTest::value()
 {
     QFETCH(int64_t, index);
