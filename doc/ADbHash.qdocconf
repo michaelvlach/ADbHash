@@ -1,0 +1,20 @@
+project                          = ADbHash
+description                      = ADbHash if fast C++ hash table.
+headerdirs                      += ..
+sourcedirs                      += ..
+headers.fileextensions          += *.h
+sources.fileextensions          += *.qdoc
+generateindex                    = true
+syntaxhighlighting               = true
+version                          = 1.0
+
+HTML.stylesheets                 = $QTDIR/doc/global/template/style/offline.css
+HTML.headerstyles                = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
+
+qhp.projects                     = ADbHash
+qhp.ADbHash.file                 = adbhash.qhp
+qhp.ADbHash.namespace            = adbhash.1.0.0
+qhp.ADbHash.virtualFolder        = adbhash
+qhp.ADbHash.indexTitle           = ADbHash Documentation
+qhp.ADbHash.indexRoot            =
+qhp.extraFiles                  += style/offline.css

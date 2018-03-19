@@ -1,0 +1,12 @@
+/*!
+\module ADbHash
+\index
+\title ADbHash Module
+\brief Contains classes used in creating ADbHash
+
+ADbHash provides Hash class as implementing multi
+hash table (map). Additionally several utility
+classes are provided for use either in conjunction
+Hash or as a model to customize the Hash for different
+back end storage mechanism.
+*/
