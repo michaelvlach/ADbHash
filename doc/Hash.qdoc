@@ -1,0 +1,5 @@
+/*!
+\class adb::Hash
+\brief The \c Hash class provides hash table.
+\inmodule ADbHash
+*/

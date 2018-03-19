@@ -1,0 +1,6 @@
+/*!
+\namespace adb
+\inmodule ADbHash
+
+The \c adb is a default ADbHash namespace.
+*/

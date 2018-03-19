@@ -1,0 +1,11 @@
+/*!
+\fn inline int adb::match(char byte, const char *data)
+\inmodule ADbHash
+
+Performs comparison between \a byte and \a data and
+returns \c int representing matching positions.
+
+The \a data will be interpreted as a 16 bytes long
+array. The result of the comparison is stored in
+lowest 16 bits of the return value.
+*/

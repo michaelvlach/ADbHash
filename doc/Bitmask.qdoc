@@ -1,0 +1,5 @@
+/*!
+    \class adb::BitMask
+    \inmodule ADbHash
+    \brief The \c BitMask class provides set bit iteration.
+*/

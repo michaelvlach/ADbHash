@@ -1,0 +1,5 @@
+/*!
+\class adb::Data
+\brief The \c Data class provides in-memory storage.
+\inmodule ADbHash
+*/

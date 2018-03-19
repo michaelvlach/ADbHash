@@ -1,0 +1,19 @@
+/*!
+\class adb::Reference
+\brief The \c Reference class provides custom reference wrapper.
+\inmodule ADbHash
+*/
+
+/*!
+\fn adb::Reference::operator T() const
+
+Implicitely converts the reference to the object \c T
+by calling \c Data.value().
+*/
+
+/*!
+\fn adb::Reference &adb::Reference::operator=(T value)
+
+Assigns \a value to the underlying reference by calling
+\c Data.setData().
+*/
