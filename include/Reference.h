@@ -14,6 +14,8 @@ public:
     operator T() const;
     Reference &operator=(T value);
 
+    void foo();
+
 private:
     Data &mData;
     int64_t mIndex = -1;
