@@ -13,9 +13,9 @@ public:
 
     explicit BitMask(T data);
 
-    iterator begin();
-    iterator end();
-    bool isEmpty() const;
+    iterator begin() const;
+    iterator end() const;
+    bool none() const;
 
 private:
     std::bitset<sizeof(T) *CHAR_BIT> mData = std::bitset<sizeof(T) * CHAR_BIT>(0);
@@ -53,19 +53,19 @@ BitMask<T>::BitMask(T data) :
 }
 
 template<typename T>
-auto BitMask<T>::begin() -> iterator
+auto BitMask<T>::begin() const -> iterator
 {
     return iterator(0, mData);
 }
 
 template<typename T>
-auto BitMask<T>::end() -> iterator
+auto BitMask<T>::end() const -> iterator
 {
     return iterator(static_cast<int>(sizeof(T) * CHAR_BIT), mData);
 }
 
 template<typename T>
-bool BitMask<T>::isEmpty() const
+bool BitMask<T>::none() const
 {
     return mData.none();
 }

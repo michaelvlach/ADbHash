@@ -398,7 +398,7 @@ int64_t Hash<Key, Value, DataType, HashFunction>::findEmpty(int64_t index) const
     {
         BitMask<uint16_t> positions = findEmptyPositions(index);
 
-        if(!positions.isEmpty())
+        if(!positions.none())
             return dataIndex(index + (*positions.begin()));
 
         index = nextGroupIndex(index);

@@ -13,7 +13,7 @@ public:
 private slots:
     void iterator();
     void iterator_data();
-    void isEmpty();
-    void isEmpty_data();
+    void none();
+    void none_data();
 };
 }
