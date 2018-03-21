@@ -4,3 +4,23 @@
 
 Default ADbHash namespace.
 */
+
+/*!
+\class adb::BitMaskTest
+\internal
+*/
+
+/*!
+\class adb::DataTest
+\internal
+*/
+
+/*!
+\class adb::HashTest
+\internal
+*/
+
+/*!
+\class adb::ReferenceTest
+\internal
+*/
