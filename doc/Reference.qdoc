@@ -2,18 +2,65 @@
 \class adb::Reference
 \brief The \c Reference class provides custom reference wrapper.
 \inmodule ADbHash
+
+It facilitates \c operator= for values that cannot rely on
+standard references. It requires type \c Data to implement
+methods \c setValue(int64_t index, T) and \c T \c value(int64_t index).
+
+Example of creating a \c Reference
+pointing to data stored in a file:
+
+\code
+struct FileData
+{
+    std::fstream file = std::fstream("filename", s.in | s.out);
+    void setValue(int64_t index, int value)
+    {
+        file.seekg(index);
+        file << value;
+    }
+    int value(int64_t index) const
+    {
+        int v = 0;
+        file.seekg(index);
+        file >> v;
+        return v;
+    }
+};
+
+FileData data;
+adb::Refererence ref(data, 8);
+
+ref = 10; //writes 10 to file
+int i = ref; //reads 10 from file
+\endcode
+
+In the example we create a struct that knows how to write and retrieve
+data from/to file and then instantiating the \c Reference object with
+the data struct's object and desired index. When \c operator= is called
+the value passed in is written to the file. When assigned to \c T the
+\c Reference is implicitely converted to \c T.
+
+It is used in adb::Hash to allow custom underlying \c Data storages (like a file)
+while retaining some of the convenience of returning references to values.
+*/
+
+/*!
+\fn adb::Reference::Reference(Data &data, int64_t index)
+
+Constructs \c Reference with \a data and \a index.
 */
 
 /*!
 \fn adb::Reference::operator T() const
 
-Implicitely converts the reference to the object \c T
-by calling \c Data.value().
+Implicitely converts the object to the object \c T
+by calling \c Data::value().
 */
 
 /*!
 \fn adb::Reference &adb::Reference::operator=(T value)
 
 Assigns \a value to the underlying reference by calling
-\c Data.setData().
+\c Data::setValue().
 */
