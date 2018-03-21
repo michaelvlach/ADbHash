@@ -58,7 +58,7 @@ int ReferenceTest::Container::value(int64_t index) const
     return mData[static_cast<int>(index)];
 }
 
-void ReferenceTest::Container::setData(int64_t index, int value)
+void ReferenceTest::Container::setValue(int64_t index, int value)
 {
     mData[static_cast<int>(index)] = value;
 }

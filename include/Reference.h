@@ -14,8 +14,6 @@ public:
     operator T() const;
     Reference &operator=(T value);
 
-    void foo();
-
 private:
     Data &mData;
     int64_t mIndex = -1;
@@ -31,7 +29,7 @@ Reference<T, Data>::Reference(Data &data, int64_t index) :
 template<typename T, typename Data>
 Reference<T, Data> &Reference<T, Data>::operator=(T value)
 {
-    mData.setData(mIndex, std::move(value));
+    mData.setValue(mIndex, std::move(value));
     return *this;
 }
 

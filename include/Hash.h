@@ -283,7 +283,7 @@ void Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Val
     const int64_t pos = findIndex(key);
 
     if(pos != capacity())
-        mData.setData(pos, newValue);
+        mData.setValue(pos, newValue);
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
