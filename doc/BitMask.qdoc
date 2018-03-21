@@ -1,7 +1,7 @@
 /*!
 \class adb::BitMask
 \inmodule ADbHash
-\brief The \c BitMask class provides bit set iteration.
+\brief The \c BitMask<T> class provides bit set iteration.
 
 It is a wrapper around std::bitset<T> and lets you iterate
 over the set bits in a value T. When iterating it returns

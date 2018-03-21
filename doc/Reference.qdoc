@@ -1,6 +1,6 @@
 /*!
 \class adb::Reference
-\brief The \c Reference class provides custom reference wrapper.
+\brief The \c Reference<T, \c Data> class provides custom reference wrapper.
 \inmodule ADbHash
 
 It facilitates \c operator= for values that cannot rely on
