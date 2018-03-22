@@ -1,5 +1,100 @@
 /*!
 \class adb::Hash
-\brief The \c Hash class provides hash table.
+\brief The \c Hash<Key, Value, DataType, HashFunction> class provides multi-hash table.
 \inmodule ADbHash
+
+It is a template class that can be customized with custom \c DataType
+and \c HashFunction. The supplied \c HashFunction must be implicitely
+convertible to \c uint64_t taking \c Key as its argument. The
+\c DataType must implement all methods that class adb::Data implements.
+
+By allowing different \c DataType classes to be used as internal
+storage the \c Hash allows for example in-file storage.
+
+The \c Hash provides dual API to be used as regular hash table or as
+a multi-hash implementation allowing for multiple values
+with the same key to be stored.
+
+\b {Manipulating Data}
+
+To store data ensuring only a one occurance of a \c Key will exist in
+the \c Hash use operator[]. The operator[] will insert new \c Key if it
+is not in the \c Hash. If you want to store \c Key with a \c Value
+regardless of if there already is one or more use insert(). To replace
+a \c Value with another one use replace() that will ensure that nothing
+will be stored if the \c Key or \c {Key-Value} pair does not exist.
+
+In order to remove all occurances of a \c Key or \c {Key-Value} pair
+from the \c Hash use remove(). If you want to remove only single instance
+use erase() that takes adb::Hash::iterator or adb::Hash::const_iterator
+as parameter.
+
+To remove all data from the \c Hash use clear().
+
+\note erase() never causes rehashing and returns adb::Hash::iterator or
+adb::Hash::const_iteartor pointing to next element after erased one.
+
+\b {Retrieving Data}
+
+There are two principal ways to retrieve data from the \c Hash. Using
+adb::Hash::iterator and adb::Hash::const_iterator either by iterating
+manually, using ranged-based for or find() methods. Alternatively you
+cann access the elements using operator[], value() and values().
+
+You may query the \c Hash for current number of stored elements with
+count(), whether it is empty with isEmpty() and the number of elements
+associated with a given key with overload of count(). The contains()
+overloads can be used to test whether hash has a given \c Key or
+\c {Key-Value} pair.
+*/
+
+/*
+\fn adb::Hash::
+*/
+
+/*!
+\fn adb::Hash::Hash(std::initializer_list<std::pair<Key, Value>> list)
+
+Constructs the \c Hash with initial values of the \a list.
+*/
+
+/*!
+\fn iterator adb::Hash::begin()
+
+Returns iterator pointing to first element in the \c Hash
+or end() if the \c Hash is empty.
+*/
+
+/*!
+\fn const_iterator adb::Hash::cbegin() const
+
+Returns const_iterator pointing to first element in the \c Hash
+or cend() if the \c Hash is empty.
+*/
+
+/*!
+\fn const_iterator adb::Hash::cend() const
+
+Returns const_iteartor pointing to past the end of capacity of
+the \c Hash.
+*/
+
+/*!
+\fn void adb::Hash::clear()
+
+Removes all data from the \c Hash and resets its internal storage.
+*/
+
+/*!
+\fn bool adb::Hash::contains(const Key &key) const
+
+Returns \c true if there is at least one occurance of \a key in
+the \c Hash.
+*/
+
+/*!
+\fn void adb::Hash::contains(const Key &key, const Value &value) const
+
+Returns \c true if there is at least one occurance of \a key and \a value
+pair in the \c Hash.
 */

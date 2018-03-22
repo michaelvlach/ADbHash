@@ -24,3 +24,8 @@ Default ADbHash namespace.
 \class adb::ReferenceTest
 \internal
 */
+
+/*!
+\fn adb::BitMask(T data)
+\internal
+*/

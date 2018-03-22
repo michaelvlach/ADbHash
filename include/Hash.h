@@ -5,8 +5,8 @@
 #include "SIMD.h"
 
 #include <cstdint>
-#include <iterator>
 #include <initializer_list>
+#include <iterator>
 #include <vector>
 
 namespace adb
@@ -51,38 +51,6 @@ public:
     std::vector<Value> values(const Key &key) const;
 
 private:
-    static constexpr int64_t GROUP_SIZE = 16;
-
-    template<typename ValueType, typename ReferenceType, typename HashType>
-    class iterator_base
-    {
-    public:
-        using value_type = ValueType;
-        using pointer = value_type *;
-        using reference = ReferenceType;
-        using difference_type = ptrdiff_t;
-        using iterator_category = std::bidirectional_iterator_tag;
-
-        iterator_base() = default;
-        iterator_base(int64_t index, HashType *data);
-
-        iterator_base &operator++();
-        iterator_base operator++(int);
-        iterator_base &operator--();
-        iterator_base operator--(int);
-        bool operator==(iterator_base other) const;
-        bool operator!=(iterator_base other) const;
-        Key key() const;
-        value_type value() const;
-        reference operator*() const;
-
-    private:
-        friend class Hash;
-
-        int64_t mIndex = -1;
-        HashType *mHash = nullptr;
-    };
-
     enum class MetaValues : char
     {
         Empty = static_cast<char>(0b10000000),
@@ -143,8 +111,40 @@ private:
     void squeeze(int64_t oldSize, int64_t newSize);
     char takeMetaValue(int64_t index);
 
+    static constexpr int64_t GROUP_SIZE = 16;
     int64_t mCount = 0;
     DataType mData = DataType(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaValues::Empty));
+};
+
+template<typename Key, typename Value, typename DataType, typename HashFunction>
+template<typename ValueType, typename ReferenceType, typename HashType>
+class Hash<Key, Value, DataType, HashFunction>::iterator_base
+{
+public:
+    using value_type = ValueType;
+    using pointer = value_type *;
+    using reference = ReferenceType;
+    using difference_type = ptrdiff_t;
+    using iterator_category = std::bidirectional_iterator_tag;
+
+    iterator_base() = default;
+    iterator_base(int64_t index, HashType *data);
+
+    iterator_base &operator++();
+    iterator_base operator++(int);
+    iterator_base &operator--();
+    iterator_base operator--(int);
+    bool operator==(iterator_base other) const;
+    bool operator!=(iterator_base other) const;
+    Key key() const;
+    value_type value() const;
+    reference operator*() const;
+
+private:
+    friend class Hash;
+
+    int64_t mIndex = -1;
+    HashType *mHash = nullptr;
 };
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
