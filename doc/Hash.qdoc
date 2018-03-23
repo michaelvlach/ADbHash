@@ -75,7 +75,7 @@ or cend() if the \c Hash is empty.
 /*!
 \fn const_iterator adb::Hash::cend() const
 
-Returns const_iteartor pointing to past the end of capacity of
+Returns const_iteartor pointing to element just past the end of the capacity of
 the \c Hash.
 */
 
@@ -97,4 +97,155 @@ the \c Hash.
 
 Returns \c true if there is at least one occurance of \a key and \a value
 pair in the \c Hash.
+*/
+
+/*!
+\fn int64_t adb::Hash::count() const
+
+Returns number of elements in the \c Hash.
+*/
+
+/*!
+\fn int64_t adb::Hash::count(const Key &key) const
+
+Returns number of elements with the \a key in the \c Hash.
+*/
+
+/*!
+\fn iterator adb::Hash::end()
+
+Returns iterator pointing to element just past the end of the capacity of
+the \c Hash.
+*/
+
+/*!
+\fn const_iterator adb::Hash::erase(const_iterator it)
+
+Removes element pointed to by \a it from the \c Hash. Returns const_iterator
+pointing to the next element after the element being erased or end() if \a it
+pointed to the last element.
+
+\note This method never causes rehashing of the \c Hash.
+*/
+
+/*!
+\fn iterator adb::Hash::erase(iterator it)
+
+Removes element pointed to by \a it from the \c Hash. Returns iterator
+pointing to the next element after the element being erased or end() if \a it
+pointed to the last element.
+
+\note This method never causes rehashing of the \c Hash.
+*/
+
+/*!
+\fn const_iterator adb::Hash::find(const Key &key) const
+
+Returns const_iterator to first element with \a key or cend() if the \a key is not
+in the \c Hash. If there are more occurances of \a key in the \c Hash their order
+is undefined.
+*/
+
+/*!
+\fn const_iterator adb::Hash::find(const Key &key, const Value &value) const
+
+Returns const_iterator to first element with \a key and \a value or cend() if the \a key
+with \a value is not in the \c Hash. If there are more occurances of \a key and \a value
+pairs in the \c Hash their order is undefined.
+*/
+
+/*!
+\fn iterator adb::Hash::find(const Key &key)
+
+Returns iterator to first element with \a key or end() if the \a key is not
+in the \c Hash. If there are more occurances of \a key in the \c Hash their order
+is undefined.
+*/
+
+/*!
+\fn iterator adb::Hash::find(const Key &key, const Value &value)
+
+Returns iterator to first element with \a key and \a value or end() if the \a key
+with \a value is not in the \c Hash. If there are more occurances of \a key and \a value
+pairs in the \c Hash their order is undefined.
+*/
+
+/*!
+\fn iterator adb::Hash::insert(const Key &key, const Value &value)
+
+Inserts new \a key with \a value as new element to the \c Hash. The \c Hash
+table might rehash. If there already is \a key this method will simply insert
+new one. If you want to replace a value with another use replace(). If you want
+to insert new or replace existing value use operator[].
+*/
+
+/*!
+\fn bool adb::Hash::isEmpty() const
+
+Returns \c true if there are no elements stored in the \c Hash.
+*/
+
+/*!
+\fn Reference<Value, DataType> adb::Hash::operator[](const Key &key)
+
+Returns Reference object wrapping the hash data and index pointing to the
+\a key 's first occurance. If there are no \a key in the \c Hash new one
+will be inserted possibly causing rehashing of the table. Returned Reference
+is assignable.
+*/
+
+/*!
+\fn Value adb::Hash::operator[](const Key &key) const
+
+Same as value().
+*/
+
+/*!
+\fn void adb::Hash::replace(const Key &key, const Value &newValue)
+
+Replaces first occurance's value of \a key with \a newValue. If there
+are more occurances of \a key in the \c Hash their order is undefined.
+If there are no elements with \a key this method does nothing (it does
+not insert new element). Consider using overloaded method that takes
+old value as additional parameter if there are multiple values
+associated with the \a key.
+*/
+
+/*!
+\fn void adb::Hash::replace(const Key &key, const Value &oldValue, const Value &newValue)
+
+Replaces first occurance of \a key - \a oldValue pair with \a newValue. If there
+are more occurances of \a key - \a oldValue pair in the \c Hash their order
+is undefined. If there are no elements with \a key this method does nothing
+(it does not insert new element). Consider using overloaded method that takes
+old value as additional parameter if there are multiple values
+associated with the \a key.
+*/
+
+/*!
+\fn void adb::Hash::remove(const Key &key)
+
+Removes all occurances of \a key from the \c Hash.
+*/
+
+/*!
+\fn void adb::Hash::remove(const Key &key, const Value &value)
+
+Removes all occurances of \a key with \a value from the \c Hash.
+*/
+
+/*!
+\fn Value adb::Hash::value(const Key &key, const Value &defaultValue) const
+
+Returns Value associated with the \a key or default constructed \c Value
+if there is no element with \a key. If there are more occurances of \a key
+in the \c Hash their order is undefined. Unlike operator[] you can specify
+your own \a defaultValue.
+*/
+
+/*!
+\fn std::vector<Value> adb::Hash::values(const Key &key) const
+
+Returns \c {list of all values} associated with \a key or empty \c list
+if the \a key is not in the \c Hash.
 */
