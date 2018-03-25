@@ -608,14 +608,4 @@ QVector<QPair<qint64, qint64>> HashTest::createMultiHashValues()
         {100, 37},
         {120, 38}};
 }
-
-HashTest::HashFunction::HashFunction(qint64 value) :
-    mValue(value)
-{
-}
-
-adb::HashTest::HashFunction::operator uint64_t() const
-{
-    return static_cast<uint64_t>(mValue);
-}
 }

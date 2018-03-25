@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Data.h>
-#include <Hash.h>
+#include <ADbHash.h>
 #include <QObject>
 #include <QPair>
 #include <QVector>
@@ -68,17 +67,6 @@ private slots:
     void values_data();
 
 private:
-    struct HashFunction
-    {
-    public:
-        HashFunction(qint64 value);
-
-        operator uint64_t() const;
-
-    private:
-        qint64 mValue = 0;
-    };
-
-    Hash<qint64, qint64, Data<qint64, qint64>, HashFunction> mHash;
+    ADbHash<qint64, qint64> mHash;
 };
 }
