@@ -12,6 +12,36 @@ iteration by single steps.
 */
 
 /*!
+\typedef adb::BitMask::const_iterator::value_type
+
+Synonym for \c int.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::pointer
+
+Synonym for \l {value_type}*.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::reference
+
+Synonym for \l {value_type}&.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::difference_type
+
+Synonym for \l {http://en.cppreference.com/w/cpp/types/ptrdiff_t}{ptrdiff_t}.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::iterator_category
+
+Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::forward_iterator_tag}.
+*/
+
+/*!
 \fn template<typename T> adb::BitMask<T>::const_iterator::const_iterator(int index, const std::bitset<sizeof(T) * CHAR_BIT> &data)
 
 Constructs \l const_iterator around
@@ -53,37 +83,5 @@ position and has the same internal data.
 /*!
 \fn template<typename T> bool adb::BitMask<T>::const_iterator::operator!=(const_iterator other) const
 
-Returns negated \l operator==().
+Returns negated \l operator==() and \a other.
 */
-
-/*!
-\typedef adb::BitMask::const_iterator::value_type
-
-Synonym for \c int.
-*/
-
-/*!
-\typedef adb::BitMask::const_iterator::pointer
-
-Synonym for \l {value_type}*.
-*/
-
-/*!
-\typedef adb::BitMask::const_iterator::reference
-
-Synonym for \l {value_type}&.
-*/
-
-/*!
-\typedef adb::BitMask::const_iterator::difference_type
-
-Synonym for \l {http://en.cppreference.com/w/cpp/types/ptrdiff_t}{ptrdiff_t}.
-*/
-
-/*!
-
-\typedef adb::BitMask::const_iterator::iterator_category
-
-Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::forward_iterator_tag}.
-*/
-

@@ -29,26 +29,26 @@ in order to keep it as minimal as possible.
 */
 
 /*!
-\fn adb::Data::Data(int64_t dataSize, int64_t metaSize, char metaValue)
+\fn template<typename Key, typename Value> adb::Data<Key, Value>::Data(int64_t dataSize, int64_t metaSize, char metaValue)
 
 Constructs \c Data object with given \a dataSize and \a metaSize. The
 meta data will be initialized to \a metaValue.
 */
 
 /*!
-\fn int64_t adb::Data::dataSize() const
+\fn template<typename Key, typename Value> int64_t adb::Data<Key, Value>::dataSize() const
 
 Returns current data \c size.
 */
 
 /*!
-\fn Key adb::Data::key(int64_t index) const
+\fn template<typename Key, typename Value> Key adb::Data<Key, Value>::key(int64_t index) const
 
 Returns \c Key stored at \a index. The \a index must be >= 0 and < dataSize().
 */
 
 /*!
-\fn const char *adb::Data::metaData(int64_t index, int64_t size) const
+\fn template<typename Key, typename Value> const char *adb::Data<Key, Value>::metaData(int64_t index, int64_t size) const
 
 Returns \c pointer to meta data starting at \a index. The index must
 be >= 0 and < metaSize(). The \a size parameter is unused and is
@@ -57,13 +57,13 @@ not store the data in contiguous memory.
 */
 
 /*!
-\fn int64_t adb::Data::metaSize() const
+\fn template<typename Key, typename Value> int64_t adb::Data<Key, Value>::metaSize() const
 
 Returns current meta data \c size.
 */
 
 /*!
-\fn void adb::Data::resize(int64_t dataSize, int64_t metaSize, char metaValue)
+\fn template<typename Key, typename Value> void adb::Data<Key, Value>::resize(int64_t dataSize, int64_t metaSize, char metaValue)
 
 Changes capacity expanding or truncating the internal storage to
 \a dataSize and \a metaSize respectively. If \a metaSize is greater than
@@ -71,35 +71,35 @@ current metaSize() the new values are initialized to \a metaValue.
 */
 
 /*!
-\fn void adb::Data::setData(int64_t index, const Key &key, const Value &value)
+\fn template<typename Key, typename Value> void adb::Data<Key, Value>::setData(int64_t index, const Key &key, const Value &value)
 
 Sets data at \a index to \a key and \a value pair. The \a index must be
 >= 0 and < dataSize().
 */
 
 /*!
-\fn void adb::Data::setMetaData(int64_t index, const std::vector<char> &values)
+\fn template<typename Key, typename Value> void adb::Data<Key, Value>::setMetaData(int64_t index, const std::vector<char> &values)
 
 Sets meta values starting at \a index to \a values. The \a index + size of
 \a values must be < metaSize().
 */
 
 /*!
-\fn void adb::Data::setMetaValue(int64_t index, char value)
+\fn template<typename Key, typename Value> void adb::Data<Key, Value>::setMetaValue(int64_t index, char value)
 
 Sets meta value at \a index to \a value. The \a index must be
 >= 0 and < metaSize().
 */
 
 /*!
-\fn void adb::Data::setValue(int64_t index, const Value &value)
+\fn template<typename Key, typename Value> void adb::Data<Key, Value>::setValue(int64_t index, const Value &value)
 
 Sets value at \a index to \a value. The \a index must be
 >= 0 and < dataSize().
 */
 
 /*!
-\fn Value adb::Data::value(int64_t index) const
+\fn template<typename Key, typename Value> Value adb::Data<Key, Value>::value(int64_t index) const
 
 Returns \c Value at \a index. The \a index must be
 >= 0 and < dataSize().

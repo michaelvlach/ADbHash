@@ -26,18 +26,18 @@ will be stored if the \c Key or \c {Key-Value} pair does not exist.
 
 In order to remove all occurances of a \c Key or \c {Key-Value} pair
 from the \c Hash use remove(). If you want to remove only single instance
-use erase() that takes adb::Hash::iterator or adb::Hash::const_iterator
+use erase() that takes adb::Hash<Key, Value, DataType, HashFunction>::iterator or adb::Hash<Key, Value, DataType, HashFunction>::const_iterator
 as parameter.
 
 To remove all data from the \c Hash use clear().
 
-\note erase() never causes rehashing and returns adb::Hash::iterator or
-adb::Hash::const_iteartor pointing to next element after erased one.
+\note erase() never causes rehashing and returns adb::Hash<Key, Value, DataType, HashFunction>::iterator or
+adb::Hash<Key, Value, DataType, HashFunction>::const_iteartor pointing to next element after erased one.
 
 \b {Retrieving Data}
 
 There are two principal ways to retrieve data from the \c Hash. Using
-adb::Hash::iterator and adb::Hash::const_iterator either by iterating
+adb::Hash<Key, Value, DataType, HashFunction>::iterator and adb::Hash<Key, Value, DataType, HashFunction>::const_iterator either by iterating
 manually, using ranged-based for or find() methods. Alternatively you
 cann access the elements using operator[], value() and values().
 
@@ -48,78 +48,74 @@ overloads can be used to test whether hash has a given \c Key or
 \c {Key-Value} pair.
 */
 
-/*
-\fn adb::Hash::
-*/
-
 /*!
-\fn adb::Hash::Hash(std::initializer_list<std::pair<Key, Value>> list)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> adb::Hash<Key, Value, DataType, HashFunction>::Hash(std::initializer_list<std::pair<Key, Value>> list)
 
 Constructs the \c Hash with initial values of the \a list.
 */
 
 /*!
-\fn iterator adb::Hash::begin()
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::begin()
 
 Returns iterator pointing to first element in the \c Hash
 or end() if the \c Hash is empty.
 */
 
 /*!
-\fn const_iterator adb::Hash::cbegin() const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::cbegin() const
 
 Returns const_iterator pointing to first element in the \c Hash
 or cend() if the \c Hash is empty.
 */
 
 /*!
-\fn const_iterator adb::Hash::cend() const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::cend() const
 
 Returns const_iteartor pointing to element just past the end of the capacity of
 the \c Hash.
 */
 
 /*!
-\fn void adb::Hash::clear()
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::clear()
 
 Removes all data from the \c Hash and resets its internal storage.
 */
 
 /*!
-\fn bool adb::Hash::contains(const Key &key) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> bool adb::Hash<Key, Value, DataType, HashFunction>::contains(const Key &key) const
 
 Returns \c true if there is at least one occurance of \a key in
 the \c Hash.
 */
 
 /*!
-\fn void adb::Hash::contains(const Key &key, const Value &value) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::contains(const Key &key, const Value &value) const
 
 Returns \c true if there is at least one occurance of \a key and \a value
 pair in the \c Hash.
 */
 
 /*!
-\fn int64_t adb::Hash::count() const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::count() const
 
 Returns number of elements in the \c Hash.
 */
 
 /*!
-\fn int64_t adb::Hash::count(const Key &key) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::count(const Key &key) const
 
 Returns number of elements with the \a key in the \c Hash.
 */
 
 /*!
-\fn iterator adb::Hash::end()
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::end()
 
 Returns iterator pointing to element just past the end of the capacity of
 the \c Hash.
 */
 
 /*!
-\fn const_iterator adb::Hash::erase(const_iterator it)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::erase(const_iterator it)
 
 Removes element pointed to by \a it from the \c Hash. Returns const_iterator
 pointing to the next element after the element being erased or end() if \a it
@@ -129,7 +125,7 @@ pointed to the last element.
 */
 
 /*!
-\fn iterator adb::Hash::erase(iterator it)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::erase(iterator it)
 
 Removes element pointed to by \a it from the \c Hash. Returns iterator
 pointing to the next element after the element being erased or end() if \a it
@@ -139,7 +135,7 @@ pointed to the last element.
 */
 
 /*!
-\fn const_iterator adb::Hash::find(const Key &key) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key) const
 
 Returns const_iterator to first element with \a key or cend() if the \a key is not
 in the \c Hash. If there are more occurances of \a key in the \c Hash their order
@@ -147,7 +143,7 @@ is undefined.
 */
 
 /*!
-\fn const_iterator adb::Hash::find(const Key &key, const Value &value) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key, const Value &value) const
 
 Returns const_iterator to first element with \a key and \a value or cend() if the \a key
 with \a value is not in the \c Hash. If there are more occurances of \a key and \a value
@@ -155,7 +151,7 @@ pairs in the \c Hash their order is undefined.
 */
 
 /*!
-\fn iterator adb::Hash::find(const Key &key)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key)
 
 Returns iterator to first element with \a key or end() if the \a key is not
 in the \c Hash. If there are more occurances of \a key in the \c Hash their order
@@ -163,7 +159,7 @@ is undefined.
 */
 
 /*!
-\fn iterator adb::Hash::find(const Key &key, const Value &value)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key, const Value &value)
 
 Returns iterator to first element with \a key and \a value or end() if the \a key
 with \a value is not in the \c Hash. If there are more occurances of \a key and \a value
@@ -171,7 +167,7 @@ pairs in the \c Hash their order is undefined.
 */
 
 /*!
-\fn iterator adb::Hash::insert(const Key &key, const Value &value)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::insert(const Key &key, const Value &value)
 
 Inserts new \a key with \a value as new element to the \c Hash. The \c Hash
 table might rehash. If there already is \a key this method will simply insert
@@ -180,13 +176,13 @@ to insert new or replace existing value use operator[].
 */
 
 /*!
-\fn bool adb::Hash::isEmpty() const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> bool adb::Hash<Key, Value, DataType, HashFunction>::isEmpty() const
 
 Returns \c true if there are no elements stored in the \c Hash.
 */
 
 /*!
-\fn Reference<Value, DataType> adb::Hash::operator[](const Key &key)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> Reference<Value, DataType> adb::Hash<Key, Value, DataType, HashFunction>::operator[](const Key &key)
 
 Returns Reference object wrapping the hash data and index pointing to the
 \a key 's first occurance. If there are no \a key in the \c Hash new one
@@ -195,13 +191,13 @@ is assignable.
 */
 
 /*!
-\fn Value adb::Hash::operator[](const Key &key) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> Value adb::Hash<Key, Value, DataType, HashFunction>::operator[](const Key &key) const
 
 Same as value().
 */
 
 /*!
-\fn void adb::Hash::replace(const Key &key, const Value &newValue)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &newValue)
 
 Replaces first occurance's value of \a key with \a newValue. If there
 are more occurances of \a key in the \c Hash their order is undefined.
@@ -212,7 +208,7 @@ associated with the \a key.
 */
 
 /*!
-\fn void adb::Hash::replace(const Key &key, const Value &oldValue, const Value &newValue)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &oldValue, const Value &newValue)
 
 Replaces first occurance of \a key - \a oldValue pair with \a newValue. If there
 are more occurances of \a key - \a oldValue pair in the \c Hash their order
@@ -223,19 +219,19 @@ associated with the \a key.
 */
 
 /*!
-\fn void adb::Hash::remove(const Key &key)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::remove(const Key &key)
 
 Removes all occurances of \a key from the \c Hash.
 */
 
 /*!
-\fn void adb::Hash::remove(const Key &key, const Value &value)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::remove(const Key &key, const Value &value)
 
 Removes all occurances of \a key with \a value from the \c Hash.
 */
 
 /*!
-\fn Value adb::Hash::value(const Key &key, const Value &defaultValue) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> Value adb::Hash<Key, Value, DataType, HashFunction>::value(const Key &key, const Value &defaultValue) const
 
 Returns Value associated with the \a key or default constructed \c Value
 if there is no element with \a key. If there are more occurances of \a key
@@ -244,7 +240,7 @@ your own \a defaultValue.
 */
 
 /*!
-\fn std::vector<Value> adb::Hash::values(const Key &key) const
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> std::vector<Value> adb::Hash<Key, Value, DataType, HashFunction>::values(const Key &key) const
 
 Returns \c {list of all values} associated with \a key or empty \c list
 if the \a key is not in the \c Hash.

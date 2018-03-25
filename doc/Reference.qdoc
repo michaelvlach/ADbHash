@@ -1,19 +1,26 @@
 /*!
 \class adb::Reference
-\brief The \c Reference<T, \c Data> class provides custom reference wrapper.
+\brief The \l {Reference}<T, Data> class provides custom reference wrapper.
 \inmodule ADbHash
 
-It facilitates \c operator= for values that cannot rely on
-standard references. It requires type \c Data to implement
-methods \c setValue(int64_t index, T) and \c T \c value(int64_t index).
+It facilitates \l operator=() for values that
+cannot rely on standard references (e.g. values stored
+in a file). It requires type \c Data to implement
+following methods:
 
-Example of creating a \c Reference
-pointing to data stored in a file:
+\list
+\li \c {void setValue(int64_t index, T)}
+\li \c {T value(int64_t index) const}
+\endlist
+
+Example of creating a \c Data type and instantiating
+\l Reference pointing to data stored in a file:
 
 \code
 struct FileData
 {
     std::fstream file = std::fstream("filename", s.in | s.out);
+
     void setValue(int64_t index, int value)
     {
         file.seekg(index);
@@ -29,38 +36,41 @@ struct FileData
 };
 
 FileData data;
-adb::Refererence ref(data, 8);
-
-ref = 10; //writes 10 to file
-int i = ref; //reads 10 from file
+adb::Refererence<int, FileData> ref(data, 8);
+ref = 10; //writes 10 to file at position 8
+int i = ref; //reads 10 from file at poition 8
 \endcode
 
-In the example we create a struct that knows how to write and retrieve
-data from/to file and then instantiating the \c Reference object with
-the data struct's object and desired index. When \c operator= is called
-the value passed in is written to the file. When assigned to \c T the
-\c Reference is implicitely converted to \c T.
+In the example we create a struct that knows how
+to write and retrieve data from/to file and then
+instantiating the \l Reference object with the data
+struct's object and desired index. When \l operator=()
+is called the value passed is written to the file.
+When assigned to \c T the Reference is implicitely
+converted to \c T.
 
-It is used in adb::Hash to allow custom underlying \c Data storages (like a file)
-while retaining some of the convenience of returning references to values.
+It is used in adb::Hash to allow custom underlying
+\c Data storage types (like a file) while retaining
+some of the convenience of reference semantics
+such as \c operator[].
 */
 
 /*!
-\fn adb::Reference::Reference(Data &data, int64_t index)
+\fn template<typename T, typename Data> adb::Reference<T, Data>::Reference(Data &data, int64_t index)
 
-Constructs \c Reference with \a data and \a index.
+Constructs \l Reference with \a data and \a index.
 */
 
 /*!
-\fn adb::Reference::operator T() const
+\fn template<typename T, typename Data> adb::Reference<T, Data>::operator T() const
 
-Implicitely converts the object to the object \c T
-by calling \c Data::value().
+Implicitely converts the object to \c T by calling
+\c Data::value().
 */
 
 /*!
-\fn adb::Reference &adb::Reference::operator=(T value)
+\fn template<typename T, typename Data> adb::Reference &adb::Reference<T, Data>::operator=(T value)
 
-Assigns \a value to the underlying reference by calling
-\c Data::setValue().
+Assigns \a value to the underlying \c Data by
+calling \c Data::setValue().
 */
