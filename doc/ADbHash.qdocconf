@@ -1,23 +1,23 @@
+include($QTDIR/doc/global/qt-html-templates-offline.qdocconf)
+
 project                          = ADbHash
 description                      = ADbHash if fast C++ hash table.
 headerdirs                      += ..
 sourcedirs                      += ..
 headers.fileextensions          += *.h
 sources.fileextensions          += *.qdoc
-generateindex                    = true
-syntaxhighlighting               = true
 version                          = 1.0
 moduleheader                     = ADbHash.h
 includepaths                     = ../include \
                                    ../include/adb
 
-HTML.stylesheets                 = $QTDIR/doc/global/template/style/offline.css
-HTML.headerstyles                = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
-HTML.extraimages                 = $QTDIR/doc/global/template/images/ico_out.png
+navigation.homepage              = ADbHash
+navigation.landingpage           = adb
+
+HTML.footer                      = "<hr><p>© 2018 Michael Vlach (aka Resurr3ction), <a href=\"https://github.com/Resurr3ction/ADbHash\">GitHub</a><p/>"
 
 qhp.projects                     = ADbHash
 qhp.ADbHash.file                 = adbhash.qhp
 qhp.ADbHash.namespace            = adbhash.1.0.0
 qhp.ADbHash.virtualFolder        = adbhash
 qhp.ADbHash.indexTitle           = ADbHash Documentation
-qhp.ADbHash.indexRoot            =
