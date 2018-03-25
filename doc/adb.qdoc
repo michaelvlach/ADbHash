@@ -2,30 +2,5 @@
 \namespace adb
 \inmodule ADbHash
 
-Default ADbHash namespace.
-*/
-
-/*!
-\class adb::BitMaskTest
-\internal
-*/
-
-/*!
-\class adb::DataTest
-\internal
-*/
-
-/*!
-\class adb::HashTest
-\internal
-*/
-
-/*!
-\class adb::ReferenceTest
-\internal
-*/
-
-/*!
-\fn adb::BitMask(T data)
-\internal
+Contains all ADbHash classes including tests.
 */

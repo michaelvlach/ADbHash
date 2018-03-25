@@ -1,0 +1,89 @@
+/*!
+\class adb::BitMask::const_iterator
+\inmodule ADbHash
+\brief The \l const_iterator class provides STL-style const iterator for adb::BitMask.
+
+It lets you iterate over set bits in adb::BitMask<T>
+returning the bit's position upon dereferencing it
+with \l operator*().
+
+The \l const_iterator supports only forward
+iteration by single steps.
+*/
+
+/*!
+\fn template<typename T> adb::BitMask<T>::const_iterator::const_iterator(int index, const std::bitset<sizeof(T) * CHAR_BIT> &data)
+
+Constructs \l const_iterator around
+\a data. The object will search for first valid
+position forward starting at \a index up to
+\a {data}'s size. If no bit is set the internal
+position value will be set to \a {data}'s size.
+*/
+
+/*!
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++() -> const_iterator
+
+Searches forward for the position of next set bit
+and returns itself.
+*/
+
+/*!
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++(int) -> const_iterator
+
+Same as operator++() but returns copy of itself
+\b before the search.
+*/
+
+/*!
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator*() const -> value_type
+
+Returns current set bit's position as value_type
+or internal data's size if it does not point to
+any set bit.
+*/
+
+/*!
+\fn template<typename T> bool adb::BitMask<T>::const_iterator::operator==(const_iterator other) const
+
+Returns \c true if \a other points to the same
+position and has the same internal data.
+*/
+
+/*!
+\fn template<typename T> bool adb::BitMask<T>::const_iterator::operator!=(const_iterator other) const
+
+Returns negated \l operator==().
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::value_type
+
+Synonym for \c int.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::pointer
+
+Synonym for \l {value_type}*.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::reference
+
+Synonym for \l {value_type}&.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::difference_type
+
+Synonym for \l {http://en.cppreference.com/w/cpp/types/ptrdiff_t}{ptrdiff_t}.
+*/
+
+/*!
+
+\typedef adb::BitMask::const_iterator::iterator_category
+
+Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::forward_iterator_tag}.
+*/
+

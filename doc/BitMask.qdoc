@@ -1,13 +1,12 @@
 /*!
 \class adb::BitMask
 \inmodule ADbHash
-\brief The \c BitMask<T> class provides bit set iteration.
+\brief The BitMask<T> class is a template
+class that provides iteration over set bits.
 
-It is a wrapper around std::bitset<T> and lets you iterate
-over the set bits in a value T. When iterating it returns
-each set bit's position.
-
-Example:
+It is a wrapper around \l{http://en.cppreference.com/w/cpp/utility/bitset}{std::bitset<T>}
+and lets you iterate over 0-indexed positions of
+the set bits in a value \c T. For example:
 
 \code
 int16_t value = 0b0001000110001000;
@@ -19,29 +18,33 @@ for(int pos : mask)
 \\Prints: 3 7 8 12
 \endcode
 
-It is used in adb::Hash to itearte over the result of adb::match().
+The primary usage is to iterate over results of
+adb::match().
 */
 
 /*!
-\fn explicit adb::BitMask::BitMask(T data)
+\fn template <typename T> adb::BitMask<T>::BitMask(T data)
 
-Constructs a \c BitMask object with \a data.
+Constructs \l BitMask from \a data.
 */
 
 /*!
-\fn iterator adb::BitMask::begin() const
+\fn template<typename T> iterator adb::BitMask<T>::begin() const
 
-Returns iterator pointing to first set bit or end() if no bit is set.
+Returns \l const_iterator pointing to the
+position of the first set bit or end() if no bit
+is set.
 */
 
 /*!
-\fn iterator adb::BitMask::end() const
+\fn template<typename T> iterator adb::BitMask<T>::end() const
 
-Returns iterator pointing to bit position equal to \c sizeof(CHAR_BIT * sizeof(T)).
+Returns \l const_iterator pointing to the bit
+position equal to \c {sizeof(CHAR_BIT * sizeof(T))}.
 */
 
 /*!
-\fn bool adb::BitMask::none() const
+\fn template<typename T> bool adb::BitMask<T>::none() const
 
-Returns \c true if no bit in a value \c T is set.
+Returns \c true if no bit is set.
 */
