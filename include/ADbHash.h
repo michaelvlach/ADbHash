@@ -23,7 +23,6 @@ template<typename Key>
 IdentityHash<Key>::IdentityHash(Key value) :
     mValue(value)
 {
-
 }
 
 template<typename Key>
