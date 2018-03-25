@@ -74,7 +74,7 @@ Project
         property string installDirectory: qbs.targetOS + "-" + qbs.architecture + "-" + qbs.toolchain.join("-")
 
         property string ignorePattern: "\\/(\\.autoproject|\\.git|external|tools)$"
-        property string additionalDirectoriesPattern: "$^"
+        property string additionalDirectoriesPattern: "^include|adb$"
         property string cppSourcesPattern: "\\.cpp$"
         property string cppHeadersPattern: "\\.h$"
         property string cppStandardHeadersPath: "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.12.25827/include/"
