@@ -1,7 +1,7 @@
 include($QTDIR/doc/global/qt-html-templates-offline.qdocconf)
 
 project                          = ADbHash
-description                      = ADbHash if fast C++ hash table.
+description                      = ADbHash is fast C++ hash table.
 headerdirs                      += ..
 sourcedirs                      += ..
 headers.fileextensions          += *.h
@@ -12,9 +12,10 @@ includepaths                     = ../include \
                                    ../include/adb
 
 navigation.homepage              = ADbHash
-navigation.landingpage           = adb
+navigation.cppclassespage        = adb
+navigation.cppclassestitle       = adb Namespace
 
-HTML.footer                      = "<hr><p>© 2018 Michael Vlach (aka Resurr3ction), <a href=\"https://github.com/Resurr3ction/ADbHash\">GitHub</a><p/>"
+HTML.footer                      = "<hr><p>© 2018 <a href=\"https://github.com/Resurr3ction\">Michael Vlach</a><p/>"
 
 qhp.projects                     = ADbHash
 qhp.ADbHash.file                 = adbhash.qhp
