@@ -787,6 +787,7 @@ Project
         property var modules: modulescanner.modules
         property var standardHeaders: modulescanner.standardHeaders
         property var includeMap: ({})
+        property var includePaths: ({})
         property var rootProject: ({})
         property var functions: project.functions
 
@@ -799,7 +800,10 @@ Project
                     var file = modules[moduleName].files.find(isInclude, { includeName: includeName });
 
                     if(file)
+                    {
+                        foundPaths[modules[moduleName].includePath] = true;
                         return { name: moduleName };
+                    }
                     else
                     {
                         for(var submoduleName in modules[moduleName].submodules)
@@ -807,7 +811,11 @@ Project
                             file = modules[moduleName].submodules[submoduleName].files.find(isInclude, { includeName: includeName })
 
                             if(file)
+                            {
+                                foundPaths[modules[moduleName].includePath] = true;
+                                foundPaths[modules[moduleName].submodules[submoduleName].includePath] = true;
                                 return { name: moduleName + "." + submoduleName };
+                            }
                         }
                     }
                 }
@@ -829,6 +837,7 @@ Project
                     if(file)
                     {
                         project.product.includedPaths[functions.getFilePath(file)] = true;
+                        foundPaths[functions.getFilePath(file)] = true;
                         return { path: functions.getFilePath(file), product: project.product, name: project.product.name };
                     }
                 }
@@ -894,8 +903,10 @@ Project
             else
             {
                 functions.addFind();
+                var foundPaths = {};
                 var includes = findIncludes(includedFiles);
                 includeMap = includes;
+                includePaths = foundPaths;
                 rootProject = scannedRootProject;
 
                 if(runTests)
@@ -1017,7 +1028,7 @@ Project
 
                 file.writeLine("}");
                 file.close();
-                return [filePath];
+                return filePath;
             }
 
             function isProjectFormatFlat()
@@ -1115,5 +1126,6 @@ Project
 
     name: configuration.name
     qbsSearchPaths: configuration.autoprojectDirectory
+    property var autoprojectIncludePaths: includefinder.includePaths
     references: projectwriter.references
 }
