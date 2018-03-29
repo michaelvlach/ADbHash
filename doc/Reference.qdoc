@@ -64,8 +64,8 @@ Constructs \l Reference with \a data and \a index.
 /*!
 \fn template<typename T, typename Data> adb::Reference<T, Data>::operator T() const
 
-Implicitely converts the object to \c T by calling
-\c Data::value().
+Implicitely converts the \l Reference object to \c T
+by returning \c Data::value().
 */
 
 /*!
