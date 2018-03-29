@@ -1,7 +1,5 @@
 /*!
 \module ADbHash
-\index
-\title ADbHash Module
 \brief Contains classes used in creating ADbHash
 
 ADbHash provides Hash class implementing multi
