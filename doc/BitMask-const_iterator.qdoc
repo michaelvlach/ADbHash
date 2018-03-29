@@ -3,12 +3,11 @@
 \inmodule ADbHash
 \brief The \l const_iterator class provides STL-style const iterator for adb::BitMask.
 
-It lets you iterate over set bits in adb::BitMask<T>
-returning the bit's position upon dereferencing it
-with \l operator*().
+It lets you iterate over positions of set bits in
+adb::BitMask<T>.
 
 The \l const_iterator supports only forward
-iteration by single steps.
+iteration in single steps.
 */
 
 /*!
@@ -42,13 +41,9 @@ Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::fo
 */
 
 /*!
-\fn template<typename T> adb::BitMask<T>::const_iterator::const_iterator(int index, const std::bitset<sizeof(T) * CHAR_BIT> &data)
+\fn template<typename T> adb::BitMask<T>::const_iterator::const_iterator(int index, const BitMask<T> &mask)
 
-Constructs \l const_iterator around
-\a data. The object will search for first valid
-position forward starting at \a index up to
-\a {data}'s size. If no bit is set the internal
-position value will be set to \a {data}'s size.
+Constructs \l const_iterator with \a index and \a mask.
 */
 
 /*!
@@ -69,19 +64,19 @@ Same as operator++() but returns copy of itself
 \fn template<typename T> auto adb::BitMask<T>::const_iterator::operator*() const -> value_type
 
 Returns current set bit's position as value_type
-or internal data's size if it does not point to
-any set bit.
+or \c {sizeof(CHAR_BIT * sizeof(T))} if it does
+not point to any set bit.
 */
 
 /*!
 \fn template<typename T> bool adb::BitMask<T>::const_iterator::operator==(const_iterator other) const
 
 Returns \c true if \a other points to the same
-position and has the same internal data.
+position in the same mask.
 */
 
 /*!
 \fn template<typename T> bool adb::BitMask<T>::const_iterator::operator!=(const_iterator other) const
 
-Returns negated \l operator==() and \a other.
+Returns negated \l operator==() with \a other.
 */
