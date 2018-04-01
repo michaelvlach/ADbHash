@@ -43,33 +43,6 @@ void HashTest::init()
     }
 }
 
-void HashTest::constructor_initializer_list()
-{
-    QFETCH(bool, empty);
-
-    if(empty)
-    {
-        mHash = decltype(mHash)({});
-        QVERIFY(mHash.isEmpty());
-    }
-    else
-    {
-        mHash = decltype(mHash)({{1, 10}, {2, 20}, {-1, -10}});
-        QCOMPARE(mHash.value(1), 10);
-        QCOMPARE(mHash.value(2), 20);
-        QCOMPARE(mHash.value(-1), -10);
-    }
-}
-
-void HashTest::constructor_initializer_list_data()
-{
-    QTest::addColumn<Setup>(SETUP);
-    QTest::addColumn<bool>(EMPTY);
-
-    QTest::newRow("Initializing with empty list should construct empty hash.") << Setup::None << true;
-    QTest::newRow("Initializing with values should insert them into the hash.") << Setup::None << false;
-}
-
 void HashTest::clear()
 {
     mHash.clear();
