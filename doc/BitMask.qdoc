@@ -1,7 +1,7 @@
 /*!
 \class adb::BitMask
-\brief The \l {BitMask}<T> class is a templat eclass that provides iteration over set bits.
-\inmodule ADbHash
+\brief The \l {BitMask}<T> class is a template class that provides iteration over set bits.
+\inmodule ADbHashModule
 
 It is a wrapper around \l{http://en.cppreference.com/w/cpp/utility/bitset}{std::bitset<T>}
 and lets you iterate over 0-indexed positions of
@@ -18,7 +18,7 @@ for(int pos : mask)
 \endcode
 
 The primary usage is to iterate over results of
-adb::match().
+the \l adb::match().
 */
 
 /*!

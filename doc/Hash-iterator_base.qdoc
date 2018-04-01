@@ -1,7 +1,7 @@
 /*!
 \class adb::Hash::iterator_base
 \brief The \l {iterator_base}<ValueType, ReferenceType, HashType> is base class for STL style iterators for \l adb::Hash.
-\inmodule ADbHash
+\inmodule ADbHashModule
 
 It lets you iterate over elements of the \l adb::Hash.
 

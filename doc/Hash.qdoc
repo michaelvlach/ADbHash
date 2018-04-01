@@ -1,7 +1,7 @@
 /*!
 \class adb::Hash
 \brief The \l {Hash}<Key, Value, DataType, HashFunction> class provides multi-hash table.
-\inmodule ADbHash
+\inmodule ADbHashModule
 
 It is a template class that can be customized with
 custom \c DataType and \c HashFunction. The supplied
@@ -11,6 +11,7 @@ custom \c DataType and \c HashFunction. The supplied
 \l adb::Data implements:
 
 \list
+\li \c {DataType(int64_t dataSize, int64_t metaSize, char metaValue, T... args)}
 \li \c {int64_t dataSize() const}
 \li \c {Key key(int64_t index) const}
 \li \c {const char *metaData(int64_t index, int64_t size) const}
@@ -29,7 +30,7 @@ example in-file storage.
 
 The \c Hash provides dual API to be used as regular
 hash table or as a multi-hash table - multiple values
-associated to the same key.
+associated with the same key.
 
 \b {Manipulating Data}
 
@@ -78,10 +79,10 @@ pair.
 */
 
 /*!
-\fn template<typename Key, typename Value, typename DataType, typename HashFunction> adb::Hash<Key, Value, DataType, HashFunction>::Hash(std::initializer_list<std::pair<Key, Value>> list)
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename... T> adb::Hash<Key, Value, DataType, HashFunction>::Hash(T... args)
 
-Constructs the \l Hash with initial values of the
-\a list.
+Constructs the \l Hash passing the \a args as extra
+parameters to constructor of \c DataType.
 */
 
 /*!

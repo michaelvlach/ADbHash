@@ -1,0 +1,26 @@
+/*!
+\module ADbHashModule
+\brief The \c ADbHash is fast C++ hash table.
+
+ADbHash module provides \l adb::Hash class
+implementing multi hash table (map). Additionally
+several utility classes are provided for use in
+conjunction with \l adb::Hash to customize it for
+different internal storage mechanisms.
+
+If simple in-memory hash table is desired consider
+using convenience \l adb::ADbHash type alias. For
+using different storage strategy implement the
+same interface as \l adb::Data and use it as
+template argument for \l adb::Hash.
+
+ADbHash module does not provide any hashing
+functions but an identity hashing with
+\l adb::IdentityHash. You need to supply your own
+hashing function or use STL's \l {http://en.cppreference.com/w/cpp/utility/hash}{std::hash}.
+
+To use ADbHash your compiler must support \l {https://en.wikipedia.org/wiki/SIMD}{SIMD}
+and C++11. If you cannot use SIMD you will need
+to simulate the \l adb::match function without
+the use of SIMD.
+*/

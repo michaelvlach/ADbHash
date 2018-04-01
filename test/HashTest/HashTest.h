@@ -31,8 +31,6 @@ public:
 private slots:
     void init();
 
-    void constructor_initializer_list();
-    void constructor_initializer_list_data();
     void clear();
     void clear_data();
     void const_iterator();

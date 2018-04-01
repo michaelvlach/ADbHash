@@ -1,6 +1,6 @@
 /*!
 \fn inline int adb::match(char byte, const char *data)
-\inmodule ADbHash
+\inmodule ADbHashModule
 
 Performs comparison between \a byte and \a data and
 returns \c int representing matching positions.

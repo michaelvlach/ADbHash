@@ -1,6 +1,6 @@
 /*!
 \class adb::BitMask::const_iterator
-\inmodule ADbHash
+\inmodule ADbHashModule
 \brief The \l const_iterator class provides STL-style const iterator for adb::BitMask.
 
 It lets you iterate over positions of set bits in
@@ -43,14 +43,15 @@ Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::fo
 /*!
 \fn template<typename T> adb::BitMask<T>::const_iterator::const_iterator(int index, const BitMask<T> &mask)
 
-Constructs \l const_iterator with \a index and \a mask.
+Constructs \l const_iterator with \a index and
+\a mask.
 */
 
 /*!
 \fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++() -> const_iterator &
 
-Searches forward for the position of next set bit
-and returns itself.
+Searches forward for the position of the next set
+bit and returns itself.
 */
 
 /*!
@@ -78,5 +79,5 @@ position in the same mask.
 /*!
 \fn template<typename T> bool adb::BitMask<T>::const_iterator::operator!=(const_iterator other) const
 
-Returns negated \l operator==() with \a other.
+Returns negated \l operator==() called with \a other.
 */

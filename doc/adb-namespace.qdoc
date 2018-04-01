@@ -1,6 +1,6 @@
 /*!
 \namespace adb
-\inmodule ADbHash
+\inmodule ADbHashModule
 
 Contains all ADbHash classes.
 */

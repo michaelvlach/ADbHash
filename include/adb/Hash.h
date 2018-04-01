@@ -21,8 +21,8 @@ public:
     using iterator = iterator_base<Value, Reference<Value, DataType>, Hash>;
     using const_iterator = iterator_base<const Value, const Reference<const Value, const DataType>, const Hash>;
 
-    Hash() = default;
-    Hash(std::initializer_list<std::pair<Key, Value>> list);
+    template<typename... T>
+    Hash(T... args);
 
     iterator begin();
     const_iterator cbegin() const;
@@ -149,10 +149,10 @@ private:
 };
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
-Hash<Key, Value, DataType, HashFunction>::Hash(std::initializer_list<std::pair<Key, Value>> list)
+template<typename... T>
+Hash<Key, Value, DataType, HashFunction>::Hash(T... args) :
+    mData(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaValues::Empty), args...)
 {
-    for(const std::pair<Key, Value> &data : list)
-        insert(std::move(data.first), std::move(data.second));
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
