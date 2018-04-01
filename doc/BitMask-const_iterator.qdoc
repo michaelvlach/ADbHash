@@ -1,0 +1,82 @@
+/*!
+\class adb::BitMask::const_iterator
+\inmodule ADbHash
+\brief The \l const_iterator class provides STL-style const iterator for adb::BitMask.
+
+It lets you iterate over positions of set bits in
+adb::BitMask<T>.
+
+The \l const_iterator supports only forward
+iteration in single steps.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::value_type
+
+Synonym for \c int.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::pointer
+
+Synonym for \l {value_type}*.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::reference
+
+Synonym for \l {value_type}&.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::difference_type
+
+Synonym for \l {http://en.cppreference.com/w/cpp/types/ptrdiff_t}{ptrdiff_t}.
+*/
+
+/*!
+\typedef adb::BitMask::const_iterator::iterator_category
+
+Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::forward_iterator_tag}.
+*/
+
+/*!
+\fn template<typename T> adb::BitMask<T>::const_iterator::const_iterator(int index, const BitMask<T> &mask)
+
+Constructs \l const_iterator with \a index and \a mask.
+*/
+
+/*!
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++() -> const_iterator &
+
+Searches forward for the position of next set bit
+and returns itself.
+*/
+
+/*!
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++(int) -> const_iterator
+
+Same as \l operator++() but returns copy of itself
+\b before the search.
+*/
+
+/*!
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator*() const -> value_type
+
+Returns current set bit's position as value_type
+or \c {sizeof(CHAR_BIT * sizeof(T))} if it does
+not point to any set bit.
+*/
+
+/*!
+\fn template<typename T> bool adb::BitMask<T>::const_iterator::operator==(const_iterator other) const
+
+Returns \c true if \a other points to the same
+position in the same mask.
+*/
+
+/*!
+\fn template<typename T> bool adb::BitMask<T>::const_iterator::operator!=(const_iterator other) const
+
+Returns negated \l operator==() with \a other.
+*/

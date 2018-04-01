@@ -1,0 +1,10 @@
+/*!
+\module ADbHash
+\brief The ADbHash is fast C++ hash table.
+
+ADbHash provides Hash class implementing multi
+hash table (map). Additionally several utility
+classes are provided for use in conjunction with Hash
+or as a model to customize the Hash for different
+back-end storage mechanism.
+*/

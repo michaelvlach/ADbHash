@@ -41,7 +41,7 @@ void BitMaskTest::iterator_data()
     QTest::newRow("When multiple bits are set in the value the BitMask iterates over all of them") << QVector<int>{7, 15, 31, 63};
 }
 
-void BitMaskTest::isEmpty()
+void BitMaskTest::none()
 {
     QFETCH(QVector<int>, setBits);
 
@@ -52,26 +52,26 @@ void BitMaskTest::isEmpty()
 
     {
         BitMask<int8_t> bitMask(static_cast<int8_t>(data.to_ullong()));
-        QTEST(bitMask.isEmpty(), RESULT);
+        QTEST(bitMask.none(), RESULT);
     }
 
     {
         BitMask<int16_t> bitMask(static_cast<int16_t>(data.to_ullong()));
-        QTEST(bitMask.isEmpty(), RESULT);
+        QTEST(bitMask.none(), RESULT);
     }
 
     {
         BitMask<int32_t> bitMask(static_cast<int32_t>(data.to_ullong()));
-        QTEST(bitMask.isEmpty(), RESULT);
+        QTEST(bitMask.none(), RESULT);
     }
 
     {
         BitMask<int64_t> bitMask(static_cast<int64_t>(data.to_ullong()));
-        QTEST(bitMask.isEmpty(), RESULT);
+        QTEST(bitMask.none(), RESULT);
     }
 }
 
-void BitMaskTest::isEmpty_data()
+void BitMaskTest::none_data()
 {
     QTest::addColumn<QVector<int>>(SET_BITS);
     QTest::addColumn<bool>(RESULT);

@@ -1,0 +1,339 @@
+/*!
+\class adb::Hash
+\brief The \l {Hash}<Key, Value, DataType, HashFunction> class provides multi-hash table.
+\inmodule ADbHash
+
+It is a template class that can be customized with
+custom \c DataType and \c HashFunction. The supplied
+\c HashFunction must be implicitely convertible to
+\c uint64_t taking \c Key as its argument. The
+\c DataType must implement all methods that class
+\l adb::Data implements:
+
+\list
+\li \c {int64_t dataSize() const}
+\li \c {Key key(int64_t index) const}
+\li \c {const char *metaData(int64_t index, int64_t size) const}
+\li \c {int64_t metaSize() const}
+\li \c {void resize(int64_t dataSize, int64_t metaSize, char metaValue)}
+\li \c {void setData(int64_t index, const Key &key, const Value &value)}
+\li \c {void setMetaData(int64_t index, const std::vector<char> &values)}
+\li \c {void setMetaValue(int64_t index, char value)}
+\li \c {void setValue(int64_t index, const Value &value)}
+\li \c {Value value(int64_t index) const}
+\endlist
+
+By allowing different \c DataType classes to be
+used as internal storage the \c Hash allows for
+example in-file storage.
+
+The \c Hash provides dual API to be used as regular
+hash table or as a multi-hash table - multiple values
+associated to the same key.
+
+\b {Manipulating Data}
+
+To store data ensuring only one occurance of a
+\c Key will exist in the \c Hash use \l operator[].
+The \l operator[] will insert new \c Key if it is
+not in the \l Hash. If you want to store new \c Key
+with a \c Value regardless of if there already is
+one or more in the \l Hash use insert(). To replace
+a \c Value with another use replace(). The replace()
+will not insert new \c Key if there was none however
+it will replace all occurances of \c Key or
+\c {Key-Value} pair. If you want to update only
+single \c Value use find() and \l {iterator}'s
+\l iterator_base::operator*().
+
+In order to remove all occurances of a \c Key or
+\c {Key-Value} pair from the \c Hash use remove().
+If you want to remove only single instance use
+erase().
+
+To remove all data from the \c Hash use clear().
+
+\note erase() never causes rehashing and returns
+\l iterator or \l const_iterator pointing to the
+next element after erased one. It is therefore safe
+to use while iterating over the \l Hash.
+
+\b {Retrieving Data}
+
+There are two principal ways to retrieve data from
+the \c Hash. One is using \l iterator and \l const_iterator
+in manual loop or ranged-based for. Alternatively
+you can access the elements using \l operator[],
+value() and values().
+
+You may query the \l Hash for current number of
+stored elements with count(), whether it is empty
+with isEmpty() and the number of elements associated
+with a given key with appropriate overload of count().
+The contains() overloads can be used to test whether
+the \l Hash has a given \c Key or \c {Key-Value}
+pair.
+
+\sa ADbHash
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> adb::Hash<Key, Value, DataType, HashFunction>::Hash(std::initializer_list<std::pair<Key, Value>> list)
+
+Constructs the \l Hash with initial values of the
+\a list.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::begin()
+
+Returns \l iterator pointing to first element in
+the \l Hash or end() if the \l Hash is empty.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::cbegin() const
+
+Returns const_iterator pointing to first element
+in the \l Hash or cend() if the \l Hash is empty.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::cend() const
+
+Returns \l const_iterator pointing to the element
+past the end of the capacity of the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::clear()
+
+Removes all data from the \l Hash and resets its
+internal storage.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> bool adb::Hash<Key, Value, DataType, HashFunction>::contains(const Key &key) const
+
+Returns \c true if there is at least one occurance
+of \a key in the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> void adb::Hash<Key, Value, DataType, HashFunction>::contains(const Key &key, const Value &value) const
+
+Returns \c true if there is at least one occurance
+of \a key and \a value pair in the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::count() const
+
+Returns number of elements in the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::count(const Key &key) const
+
+Returns number of elements with the \a key in the
+\l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::count(const Key &key, const Value &value) const
+
+Returns number of elements with the \a key and
+\a value in the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::end()
+
+Returns \l iterator pointing to the element past
+the end of the capacity of the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::erase(const_iterator it)
+
+Removes element pointed to by \a it from the
+\l Hash. Returns \l const_iterator pointing to
+the next element after the element being erased
+or end() if \a it pointed to the last valid element.
+
+\note This method never causes rehashing of the
+\l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::erase(iterator it)
+
+Removes element pointed to by \a it from the
+\l Hash. Returns \l iterator pointing to the next
+element after the element being erased or end()
+if \a it pointed to the last valid element.
+
+\note This method never causes rehashing of the
+\l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key) const
+
+Returns \l const_iterator to first element with
+\a key or cend() if the \a key is not in the
+\l Hash. If there are more occurances of \a key
+in the \l Hash their order is undefined.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> const_iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key, const Value &value) const
+
+Returns \l const_iterator to first element with
+\a key and \a value or cend() if the \a key with
+\a value is not in the \l Hash. If there are more
+occurances of \a key and \a value pairs in the
+\l Hash their order is undefined.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key)
+
+Returns \l iterator to first element with \a key
+or end() if the \a key is not in the \l Hash. If
+there are more occurances of \a key in the \l Hash
+their order is undefined.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::find(const Key &key, const Value &value)
+
+Returns iterator to first element with \a key and
+\a value or end() if the \a key with \a value is
+not in the \l Hash. If there are more occurances
+of \a key and \a value pairs in the \l Hash their
+order is undefined.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> iterator adb::Hash<Key, Value, DataType, HashFunction>::insert(const Key &key, const Value &value)
+
+Inserts new \a key with \a value as new element to
+the \l Hash. The \l Hash table might rehash. If
+there already is \a key this method will simply
+insert new one. If you want to replace a value with
+another use replace() (or find() and
+\l {iterator_base::operator*()}). If you want to
+insert new or replace existing value use
+\l operator[].
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> bool adb::Hash<Key, Value, DataType, HashFunction>::isEmpty() const
+
+Returns \c true if there are no elements stored
+in the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> Reference<Value, DataType> adb::Hash<Key, Value, DataType, HashFunction>::operator[](const Key &key)
+
+Returns \l adb::Reference object wrapping the hash's
+\c DataType and index pointing to the \a {key}'s
+first occurance. If \a key is not in the \l Hash
+new one will be inserted possibly causing rehashing
+of the table. If there are multiple elements with
+\a key it is undefined which one will be chosen.
+Returned \l adb::Reference is assignable providing
+typical \l operator[] semantics:
+
+\code
+ADbHash<int, int> map;
+map[10] = 100; //inserts new element {10, 100}
+map[10] = 101; //replaces value associated with key 10
+\endcode
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> Value adb::Hash<Key, Value, DataType, HashFunction>::operator[](const Key &key) const
+
+Returns call to value() with \a key.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &newValue)
+
+Replaces all values associated with \a key with
+\a newValue. If there are no elements with \a key
+this method does nothing (it does not insert new
+element). Consider using overloaded method that
+takes old value as additional parameter if there
+are multiple values associated with the \a key.
+To replace only single value when there are
+multiple associated with \a key use find() and
+\l iterator_base::operator*(). Returns number of
+replaced elements (\c 0 if no element was replaced).
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &oldValue, const Value &newValue)
+
+Replaces all values equal to \a key - \a oldValue
+pair with \a newValue. If there are no elements
+with \a key this method does nothing (it does not
+insert new element). Consider using overloaded
+method that takes old value as additional parameter
+if there are multiple values associated with the
+\a key. To replace only single value when there are
+multiple same with \a key - \a oldValue pairs use
+find() and \l iterator_base::operator*(). Returns
+number of replaced elements (\c 0 if no element
+was replaced).
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::remove(const Key &key)
+
+Removes all occurances of \a key from the \l Hash.
+Returns number of removed elements or 0 if \a key
+was not in the \l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> int64_t adb::Hash<Key, Value, DataType, HashFunction>::remove(const Key &key, const Value &value)
+
+Removes all occurances of \a key with \a value from
+the \c Hash. Retturns number of removed elements or
+0 if no \a key - \a value pair was not in the
+\l Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> Value adb::Hash<Key, Value, DataType, HashFunction>::value(const Key &key, const Value &defaultValue) const
+
+Returns \c Value associated with the \a key or
+\a defaultValue if there is no element with \a key.
+If there are more occurances of \a key in the
+\l Hash their order is undefined. Unlike \l operator[]
+you can specify your own \a defaultValue.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> std::vector<Value> adb::Hash<Key, Value, DataType, HashFunction>::values(const Key &key) const
+
+Returns \c {vector of all values} associated with
+\a key or empty \c list if the \a key is not in
+the \c Hash.
+*/
+
+/*!
+\typedef adb::Hash::iterator
+
+Same as \l {iterator_base}<Value, Reference<Value, DataType>, Hash>.
+*/
+
+/*!
+\typedef adb::Hash::const_iterator
+
+Same ase \l {iterator_base}<const Value, const Reference<const Value, const DataType>, const Hash>.
+*/

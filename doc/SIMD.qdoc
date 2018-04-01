@@ -1,0 +1,22 @@
+/*!
+\fn inline int adb::match(char byte, const char *data)
+\inmodule ADbHash
+
+Performs comparison between \a byte and \a data and
+returns \c int representing matching positions.
+
+The \a data will be interpreted as a 16 bytes
+array. The result of the comparison is stored in
+lowest 16 bits of the return value.
+
+Example:
+\code
+const char *data = "aaabcccbdddbeeeb";
+const char value = 'b';
+int result = match(value, data);
+//result == 0b00000000000000000001000100010001;
+\endcode
+
+\note Requires SIMD (Single Instruction Multiple Data)
+to be supported by your compiler.
+*/

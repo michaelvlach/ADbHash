@@ -1,0 +1,76 @@
+/*!
+\class adb::Reference
+\brief The \l {Reference}<T, Data> class provides custom reference wrapper.
+\inmodule ADbHash
+
+It facilitates \l operator=() for values that
+cannot rely on standard references (e.g. values stored
+in a file). It requires type \c Data to implement
+following methods:
+
+\list
+\li \c {void setValue(int64_t index, T)}
+\li \c {T value(int64_t index) const}
+\endlist
+
+Example of creating a \c Data type and instantiating
+\l Reference pointing to data stored in a file:
+
+\code
+struct FileData
+{
+    std::fstream file = std::fstream("filename", s.in | s.out);
+
+    void setValue(int64_t index, int value)
+    {
+        file.seekg(index);
+        file << value;
+    }
+    int value(int64_t index) const
+    {
+        int v = 0;
+        file.seekg(index);
+        file >> v;
+        return v;
+    }
+};
+
+FileData data;
+adb::Refererence<int, FileData> ref(data, 8);
+ref = 10; //writes 10 to file at position 8
+int i = ref; //reads 10 from file at poition 8
+\endcode
+
+In the example we create a struct that knows how
+to write and retrieve data from/to file and then
+instantiating the \l Reference object with the data
+struct's object and desired index. When \l operator=()
+is called the value passed is written to the file.
+When assigned to \c T the Reference is implicitely
+converted to \c T.
+
+It is used in adb::Hash to allow custom underlying
+\c Data storage types (like a file) while retaining
+some of the convenience of reference semantics
+such as \c operator[].
+*/
+
+/*!
+\fn template<typename T, typename Data> adb::Reference<T, Data>::Reference(Data &data, int64_t index)
+
+Constructs \l Reference with \a data and \a index.
+*/
+
+/*!
+\fn template<typename T, typename Data> adb::Reference<T, Data>::operator T() const
+
+Implicitely converts the \l Reference object to \c T
+by returning \c Data::value().
+*/
+
+/*!
+\fn template<typename T, typename Data> adb::Reference &adb::Reference<T, Data>::operator=(T value)
+
+Assigns \a value to the underlying \c Data by
+calling \c Data::setValue().
+*/

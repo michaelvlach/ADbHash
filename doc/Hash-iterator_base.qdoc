@@ -1,0 +1,119 @@
+/*!
+\class adb::Hash::iterator_base
+\brief The \l {iterator_base}<ValueType, ReferenceType, HashType> is base class for STL style iterators for \l adb::Hash.
+\inmodule ADbHash
+
+It lets you iterate over elements of the \l adb::Hash.
+
+In order to create a const or non-const iterator
+from \l iterator_base you need to provide three
+template arguments:
+
+\list
+\li ValueType
+\li ReferenceType
+\li HashType
+\endlist
+
+See \l adb::Hash::iterator and \l adb::Hash::const_iterator.
+
+The \l iterator_base is a \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{bidirectional iterator}.
+*/
+
+/*!
+\typedef adb::Hash::iterator_base::value_type
+
+Synonym for \c ValueType template argument.
+*/
+
+/*!
+\typedef adb::Hash::iterator_base::pointer
+
+Synonym for \l {value_type}*.
+*/
+
+/*!
+\typedef adb::Hash::iterator_base::reference
+
+Synonym for \c ReferenceType template argument.
+*/
+
+/*!
+\typedef adb::Hash::iterator_base::difference_type
+
+Synonym for \l {http://en.cppreference.com/w/cpp/types/ptrdiff_t}{ptrdiff_t}.
+*/
+
+/*!
+\typedef adb::Hash::iterator_base::iterator_category
+
+Synonym for \l {http://en.cppreference.com/w/cpp/iterator/iterator_tags}{std::bidirectional_iterator_tag}.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::iterator_base(int64_t index, HashType *hash)
+
+Constructs \l iterator_base with \a index and \a hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> auto adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator++() -> iterator_base &
+
+Searches forward for the next element and returns
+itself.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> auto adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator++(int) -> iterator_base
+
+Same as \l operator++() but returns copy of itself
+\b before the search.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> auto adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator--() -> iterator_base &
+
+Searches backward for the previous element and
+returns itself.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> auto adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator--(int) -> iterator_base
+
+Same as \l operator--() but returns copy of itself
+\b before the search.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> bool adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator==(iterator_base other) const
+
+Returns \c true if \a other points to the same
+element in the same \l adb::Hash.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> bool adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator!=(iterator_base other) const
+
+Returns negated \l operator==() with \a other.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> Key adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::key() const
+
+Returns \c Key of the element pointed to by this
+\l iterator_base.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> auto adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::value() const -> value_type
+
+Returns \l value_type of the element pointed to by
+this \l iterator_base.
+*/
+
+/*!
+\fn template<typename Key, typename Value, typename DataType, typename HashFunction> template<typename ValueType, typename ReferenceType, typename HashType> auto adb::Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::operator*() const -> reference
+
+Returns \l reference to the value of the element
+pointed to by this \l iterator_base.
+*/

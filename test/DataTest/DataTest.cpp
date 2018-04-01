@@ -173,26 +173,6 @@ void DataTest::setData_data()
     QTest::newRow("Set value in data with values overwrites the existing value") << Setup::Data << int64_t(1) << -10 << -100;
 }
 
-void DataTest::setData_value()
-{
-    QFETCH(int64_t, index);
-    QFETCH(int, value);
-
-    mData.setData(index, value);
-
-    QCOMPARE(mData.value(index), value);
-}
-
-void DataTest::setData_value_data()
-{
-    QTest::addColumn<Setup>(SETUP);
-    QTest::addColumn<int64_t>(INDEX);
-    QTest::addColumn<int>(VALUE);
-
-    QTest::newRow("Set value in default constructed data") << Setup::Empty << int64_t(1) << -100;
-    QTest::newRow("Set value in data with values overwrites the existing value") << Setup::Data << int64_t(1) << -100;
-}
-
 void DataTest::setMetaData()
 {
     QFETCH(int64_t, index);
@@ -213,17 +193,17 @@ void DataTest::setMetaData_data()
     QTest::newRow("Set meta values in data with values should overwrite existing values") << Setup::Data << int64_t(1) << QVector<char>{1, 2, 3, 4, 5};
 }
 
-void DataTest::setMetaData_value()
+void DataTest::setMetaValue()
 {
     QFETCH(int64_t, index);
     QFETCH(char, value);
 
-    mData.setMetaData(index, value);
+    mData.setMetaValue(index, value);
 
     QCOMPARE(*mData.metaData(index, 1), value);
 }
 
-void DataTest::setMetaData_value_data()
+void DataTest::setMetaValue_data()
 {
     QTest::addColumn<Setup>(SETUP);
     QTest::addColumn<int64_t>(INDEX);
@@ -231,6 +211,26 @@ void DataTest::setMetaData_value_data()
 
     QTest::newRow("Set meta value in default constructed data") << Setup::Empty << int64_t(1) << char(-1);
     QTest::newRow("Set meta value in data with values should overwrite existing value") << Setup::Data << int64_t(1) << char(1);
+}
+
+void DataTest::setValue()
+{
+    QFETCH(int64_t, index);
+    QFETCH(int, value);
+
+    mData.setValue(index, value);
+
+    QCOMPARE(mData.value(index), value);
+}
+
+void DataTest::setValue_data()
+{
+    QTest::addColumn<Setup>(SETUP);
+    QTest::addColumn<int64_t>(INDEX);
+    QTest::addColumn<int>(VALUE);
+
+    QTest::newRow("Set value in default constructed data") << Setup::Empty << int64_t(1) << -100;
+    QTest::newRow("Set value in data with values overwrites the existing value") << Setup::Data << int64_t(1) << -100;
 }
 
 void DataTest::value()

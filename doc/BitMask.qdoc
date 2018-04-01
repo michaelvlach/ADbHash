@@ -1,0 +1,49 @@
+/*!
+\class adb::BitMask
+\brief The \l {BitMask}<T> class is a templat eclass that provides iteration over set bits.
+\inmodule ADbHash
+
+It is a wrapper around \l{http://en.cppreference.com/w/cpp/utility/bitset}{std::bitset<T>}
+and lets you iterate over 0-indexed positions of
+the set bits in a value \c T. For example:
+
+\code
+int16_t value = 0b0001000110001000;
+adb::BitMask<int16_t> mask(value);
+
+for(int pos : mask)
+    std::cout << pos << ' ';
+
+\\Prints: 3 7 8 12
+\endcode
+
+The primary usage is to iterate over results of
+adb::match().
+*/
+
+/*!
+\fn template <typename T> adb::BitMask<T>::BitMask(T data)
+
+Constructs \l BitMask from \a data.
+*/
+
+/*!
+\fn template<typename T> iterator adb::BitMask<T>::begin() const
+
+Returns \l const_iterator pointing to the
+position of the first set bit or end() if no bit
+is set.
+*/
+
+/*!
+\fn template<typename T> iterator adb::BitMask<T>::end() const
+
+Returns \l const_iterator pointing to the bit
+position equal to \c {sizeof(CHAR_BIT * sizeof(T))}.
+*/
+
+/*!
+\fn template<typename T> bool adb::BitMask<T>::none() const
+
+Returns \c true if no bit is set.
+*/
