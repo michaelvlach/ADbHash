@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- BitMask-const_iterator.qdoc -->
+  <title>const_iterator Class | ADbHash 1.0</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="adbhash-module.html">ADbHash</a></td><td ><a href="adb.html">adb Namespace</a></td><td >const_iterator</td>        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">const_iterator Class</h1>
+<span class="small-subtitle">(<a href="adb-bitmask-const-iterator.html">adb::BitMask::const_iterator</a>)<br/></span>
+<!-- $$$const_iterator-brief -->
+<p>The <a href="adb-bitmask-const-iterator.html">const_iterator</a> class provides STL-style const iterator for <a href="adb-bitmask.html">adb::BitMask</a>. <a href="#details">More...</a></p>
+<!-- @@@const_iterator -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;const_iterator&gt;</span>
+</td></tr></table></div><ul>
+<li><a href="adb-bitmask-const-iterator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#difference_type-typedef">difference_type</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#iterator_category-typedef">iterator_category</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#pointer-typedef">pointer</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#reference-typedef">reference</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#value_type-typedef">value_type</a></b></td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#const_iterator">const_iterator</a></b>(int <i>index</i>, const BitMask&lt;T&gt; &amp;<i>mask</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#operator-not-eq">operator!=</a></b>(const_iterator <i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const_iterator::value_type </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#operator-2a">operator*</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const_iterator &amp;</td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#operator-2b-2b">operator++</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const_iterator </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#operator-2b-2b-1">operator++</a></b>(<i>int</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="adb-bitmask-const-iterator.html#operator-eq-eq">operator==</a></b>(const_iterator <i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$const_iterator-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="adb-bitmask-const-iterator.html">const_iterator</a> class provides STL-style const iterator for <a href="adb-bitmask.html">adb::BitMask</a>.</p>
+<p>It lets you iterate over positions of set bits in <a href="adb-bitmask.html">adb::BitMask</a>&lt;T&gt;.</p>
+<p>The <a href="adb-bitmask-const-iterator.html">const_iterator</a> supports only forward iteration in single steps.</p>
+</div>
+<!-- @@@const_iterator -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$difference_type -->
+<h3 class="fn" id="difference_type-typedef"><a name="difference_type-typedef"></a>typedef const_iterator::<span class="name">difference_type</span></h3>
+<p>Synonym for <a href="http://en.cppreference.com/w/cpp/types/ptrdiff_t">ptrdiff_t</a>.</p>
+<!-- @@@difference_type -->
+<!-- $$$iterator_category -->
+<h3 class="fn" id="iterator_category-typedef"><a name="iterator_category-typedef"></a>typedef const_iterator::<span class="name">iterator_category</span></h3>
+<p>Synonym for <a href="http://en.cppreference.com/w/cpp/iterator/iterator_tags">std::forward_iterator_tag</a>.</p>
+<!-- @@@iterator_category -->
+<!-- $$$pointer -->
+<h3 class="fn" id="pointer-typedef"><a name="pointer-typedef"></a>typedef const_iterator::<span class="name">pointer</span></h3>
+<p>Synonym for <a href="adb-bitmask-const-iterator.html#value_type-typedef">value_type</a>*.</p>
+<!-- @@@pointer -->
+<!-- $$$reference -->
+<h3 class="fn" id="reference-typedef"><a name="reference-typedef"></a>typedef const_iterator::<span class="name">reference</span></h3>
+<p>Synonym for <a href="adb-bitmask-const-iterator.html#value_type-typedef">value_type</a>&amp;.</p>
+<!-- @@@reference -->
+<!-- $$$value_type -->
+<h3 class="fn" id="value_type-typedef"><a name="value_type-typedef"></a>typedef const_iterator::<span class="name">value_type</span></h3>
+<p>Synonym for <code>int</code>.</p>
+<!-- @@@value_type -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$const_iterator[overload1]$$$const_iteratorintconstBitMask<T>& -->
+<h3 class="fn" id="const_iterator"><a name="const_iterator"></a>const_iterator::<span class="name">const_iterator</span>(<span class="type">int</span> <i>index</i>, const <span class="type"><a href="adb-bitmask.html#BitMask">BitMask</a></span>&lt;<span class="type">T</span>&gt; &amp;<i>mask</i>)</h3>
+<p>Constructs <a href="adb-bitmask-const-iterator.html">const_iterator</a> with <i>index</i> and <i>mask</i>.</p>
+<!-- @@@const_iterator -->
+<!-- $$$operator!=[overload1]$$$operator!=const_iterator -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> const_iterator::<span class="name">operator!=</span>(<span class="type"><a href="adb-bitmask-const-iterator.html#const_iterator">const_iterator</a></span> <i>other</i>) const</h3>
+<p>Returns negated <a href="adb-bitmask-const-iterator.html#operator-eq-eq">operator==</a>() with <i>other</i>.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator*[overload1]$$$operator* -->
+<h3 class="fn" id="operator-2a"><a name="operator-2a"></a><span class="type"><a href="adb-bitmask-const-iterator.html#value_type-typedef">const_iterator::value_type</a></span> const_iterator::<span class="name">operator*</span>() const</h3>
+<p>Returns current set bit's position as <a href="adb-bitmask-const-iterator.html#value_type-typedef">value_type</a> or <code>sizeof(CHAR_BIT * sizeof(T))</code> if it does not point to any set bit.</p>
+<!-- @@@operator* -->
+<!-- $$$operator++[overload1]$$$operator++ -->
+<h3 class="fn" id="operator-2b-2b"><a name="operator-2b-2b"></a><span class="type"><a href="adb-bitmask-const-iterator.html#const_iterator">const_iterator</a></span> &amp;const_iterator::<span class="name">operator++</span>()</h3>
+<p>Searches forward for the position of next set bit and returns itself.</p>
+<!-- @@@operator++ -->
+<!-- $$$operator++$$$operator++int -->
+<h3 class="fn" id="operator-2b-2b-1"><a name="operator-2b-2b-1"></a><span class="type"><a href="adb-bitmask-const-iterator.html#const_iterator">const_iterator</a></span> const_iterator::<span class="name">operator++</span>(<i>int</i>)</h3>
+<p>Same as <a href="adb-bitmask-const-iterator.html#operator-2b-2b">operator++</a>() but returns copy of itself <b>before</b> the search.</p>
+<!-- @@@operator++ -->
+<!-- $$$operator==[overload1]$$$operator==const_iterator -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> const_iterator::<span class="name">operator==</span>(<span class="type"><a href="adb-bitmask-const-iterator.html#const_iterator">const_iterator</a></span> <i>other</i>) const</h3>
+<p>Returns <code>true</code> if <i>other</i> points to the same position in the same mask.</p>
+<!-- @@@operator== -->
+</div>
+<hr><p>© 2018 <a href="https://github.com/Resurr3ction">Michael Vlach</a><p/></body>
+</html>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Hash-iterator_base.qdoc -->
+  <title>iterator_base Class | ADbHash 1.0</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="adbhash-module.html">ADbHash</a></td><td ><a href="adb.html">adb Namespace</a></td><td >iterator_base</td>        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">iterator_base Class</h1>
+<span class="small-subtitle">(<a href="adb-hash-iterator-base.html">adb::Hash::iterator_base</a>)<br/></span>
+<!-- $$$iterator_base-brief -->
+<p>The <a href="adb-hash-iterator-base.html">iterator_base</a>&lt;ValueType, ReferenceType, HashType&gt; is base class for STL style iterators for <a href="adb-hash.html">adb::Hash</a>. <a href="#details">More...</a></p>
+<!-- @@@iterator_base -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;iterator_base&gt;</span>
+</td></tr></table></div><ul>
+<li><a href="adb-hash-iterator-base-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#difference_type-typedef">difference_type</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#iterator_category-typedef">iterator_category</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#pointer-typedef">pointer</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#reference-typedef">reference</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> typedef </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#value_type-typedef">value_type</a></b></td></tr>
+</table></div>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#iterator_base-1">iterator_base</a></b>(int64_t <i>index</i>, HashType *<i>hash</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Key </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#key">key</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> iterator_base::value_type </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#value">value</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator-not-eq">operator!=</a></b>(iterator_base&lt;ValueType, ReferenceType, HashType&gt; <i>other</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> iterator_base::reference </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator-2a">operator*</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> iterator_base&lt;ValueType, ReferenceType, HashType&gt; &amp;</td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator-2b-2b">operator++</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> iterator_base&lt;ValueType, ReferenceType, HashType&gt; </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator-2b-2b-1">operator++</a></b>(<i>int</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> iterator_base&lt;ValueType, ReferenceType, HashType&gt; &amp;</td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator--">operator--</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> iterator_base&lt;ValueType, ReferenceType, HashType&gt; </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator---1">operator--</a></b>(<i>int</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="adb-hash-iterator-base.html#operator-eq-eq">operator==</a></b>(iterator_base&lt;ValueType, ReferenceType, HashType&gt; <i>other</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$iterator_base-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="adb-hash-iterator-base.html">iterator_base</a>&lt;ValueType, ReferenceType, HashType&gt; is base class for STL style iterators for <a href="adb-hash.html">adb::Hash</a>.</p>
+<p>It lets you iterate over elements of the <a href="adb-hash.html">adb::Hash</a>.</p>
+<p>In order to create a const or non-const iterator from <a href="adb-hash-iterator-base.html">iterator_base</a> you need to provide three template arguments:</p>
+<ul>
+<li>ValueType</li>
+<li>ReferenceType</li>
+<li>HashType</li>
+</ul>
+<p>See <a href="adb-hash.html#iterator-typedef">adb::Hash::iterator</a> and <a href="adb-hash.html#const_iterator-typedef">adb::Hash::const_iterator</a>.</p>
+<p>The <a href="adb-hash-iterator-base.html">iterator_base</a> is a <a href="http://en.cppreference.com/w/cpp/iterator/iterator_tags">bidirectional iterator</a>.</p>
+</div>
+<!-- @@@iterator_base -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$difference_type -->
+<h3 class="fn" id="difference_type-typedef"><a name="difference_type-typedef"></a>typedef iterator_base::<span class="name">difference_type</span></h3>
+<p>Synonym for <a href="http://en.cppreference.com/w/cpp/types/ptrdiff_t">ptrdiff_t</a>.</p>
+<!-- @@@difference_type -->
+<!-- $$$iterator_category -->
+<h3 class="fn" id="iterator_category-typedef"><a name="iterator_category-typedef"></a>typedef iterator_base::<span class="name">iterator_category</span></h3>
+<p>Synonym for <a href="http://en.cppreference.com/w/cpp/iterator/iterator_tags">std::bidirectional_iterator_tag</a>.</p>
+<!-- @@@iterator_category -->
+<!-- $$$pointer -->
+<h3 class="fn" id="pointer-typedef"><a name="pointer-typedef"></a>typedef iterator_base::<span class="name">pointer</span></h3>
+<p>Synonym for <a href="adb-hash-iterator-base.html#value_type-typedef">value_type</a>*.</p>
+<!-- @@@pointer -->
+<!-- $$$reference -->
+<h3 class="fn" id="reference-typedef"><a name="reference-typedef"></a>typedef iterator_base::<span class="name">reference</span></h3>
+<p>Synonym for <code>ReferenceType</code> template argument.</p>
+<!-- @@@reference -->
+<!-- $$$value_type -->
+<h3 class="fn" id="value_type-typedef"><a name="value_type-typedef"></a>typedef iterator_base::<span class="name">value_type</span></h3>
+<p>Synonym for <code>ValueType</code> template argument.</p>
+<!-- @@@value_type -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$iterator_base[overload1]$$$iterator_base -->
+<h3 class="fn" id="iterator_base"><a name="iterator_base"></a>iterator_base::<span class="name">iterator_base</span>()</h3>
+<p>Default constructs an instance of iterator_base.</p><!-- @@@iterator_base -->
+<!-- $$$iterator_base$$$iterator_baseint64_tHashType* -->
+<h3 class="fn" id="iterator_base-1"><a name="iterator_base-1"></a>iterator_base::<span class="name">iterator_base</span>(<span class="type">int64_t</span> <i>index</i>, <span class="type">HashType</span> *<i>hash</i>)</h3>
+<p>Constructs <a href="adb-hash-iterator-base.html">iterator_base</a> with <i>index</i> and <i>hash</i>.</p>
+<!-- @@@iterator_base -->
+<!-- $$$key[overload1]$$$key -->
+<h3 class="fn" id="key"><a name="key"></a><span class="type">Key</span> iterator_base::<span class="name">key</span>() const</h3>
+<p>Returns <code>Key</code> of the element pointed to by this <a href="adb-hash-iterator-base.html">iterator_base</a>.</p>
+<!-- @@@key -->
+<!-- $$$value[overload1]$$$value -->
+<h3 class="fn" id="value"><a name="value"></a><span class="type"><a href="adb-hash-iterator-base.html#value_type-typedef">iterator_base::value_type</a></span> iterator_base::<span class="name">value</span>() const</h3>
+<p>Returns <a href="adb-hash-iterator-base.html#value_type-typedef">value_type</a> of the element pointed to by this <a href="adb-hash-iterator-base.html">iterator_base</a>.</p>
+<!-- @@@value -->
+<!-- $$$operator!=[overload1]$$$operator!=iterator_base<ValueType,ReferenceType,HashType> -->
+<h3 class="fn" id="operator-not-eq"><a name="operator-not-eq"></a><span class="type">bool</span> iterator_base::<span class="name">operator!=</span>(<span class="type"><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></span>&lt;<span class="type">ValueType</span>, <span class="type">ReferenceType</span>, <span class="type">HashType</span>&gt; <i>other</i>) const</h3>
+<p>Returns negated <a href="adb-hash-iterator-base.html#operator-eq-eq">operator==</a>() with <i>other</i>.</p>
+<!-- @@@operator!= -->
+<!-- $$$operator*[overload1]$$$operator* -->
+<h3 class="fn" id="operator-2a"><a name="operator-2a"></a><span class="type"><a href="adb-hash-iterator-base.html#reference-typedef">iterator_base::reference</a></span> iterator_base::<span class="name">operator*</span>() const</h3>
+<p>Returns <a href="adb-hash-iterator-base.html#reference-typedef">reference</a> to the value of the element pointed to by this <a href="adb-hash-iterator-base.html">iterator_base</a>.</p>
+<!-- @@@operator* -->
+<!-- $$$operator++[overload1]$$$operator++ -->
+<h3 class="fn" id="operator-2b-2b"><a name="operator-2b-2b"></a><span class="type"><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></span>&lt;<span class="type">ValueType</span>, <span class="type">ReferenceType</span>, <span class="type">HashType</span>&gt; &amp;iterator_base::<span class="name">operator++</span>()</h3>
+<p>Searches forward for the next element and returns itself.</p>
+<!-- @@@operator++ -->
+<!-- $$$operator++$$$operator++int -->
+<h3 class="fn" id="operator-2b-2b-1"><a name="operator-2b-2b-1"></a><span class="type"><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></span>&lt;<span class="type">ValueType</span>, <span class="type">ReferenceType</span>, <span class="type">HashType</span>&gt; iterator_base::<span class="name">operator++</span>(<i>int</i>)</h3>
+<p>Same as <a href="adb-hash-iterator-base.html#operator-2b-2b">operator++</a>() but returns copy of itself <b>before</b> the search.</p>
+<!-- @@@operator++ -->
+<!-- $$$operator--[overload1]$$$operator-- -->
+<h3 class="fn" id="operator--"><a name="operator--"></a><span class="type"><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></span>&lt;<span class="type">ValueType</span>, <span class="type">ReferenceType</span>, <span class="type">HashType</span>&gt; &amp;iterator_base::<span class="name">operator--</span>()</h3>
+<p>Searches backward for the previous element and returns itself.</p>
+<!-- @@@operator-- -->
+<!-- $$$operator--$$$operator--int -->
+<h3 class="fn" id="operator---1"><a name="operator---1"></a><span class="type"><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></span>&lt;<span class="type">ValueType</span>, <span class="type">ReferenceType</span>, <span class="type">HashType</span>&gt; iterator_base::<span class="name">operator--</span>(<i>int</i>)</h3>
+<p>Same as <a href="adb-hash-iterator-base.html#operator--">operator--</a>() but returns copy of itself <b>before</b> the search.</p>
+<!-- @@@operator-- -->
+<!-- $$$operator==[overload1]$$$operator==iterator_base<ValueType,ReferenceType,HashType> -->
+<h3 class="fn" id="operator-eq-eq"><a name="operator-eq-eq"></a><span class="type">bool</span> iterator_base::<span class="name">operator==</span>(<span class="type"><a href="adb-hash-iterator-base.html#iterator_base">iterator_base</a></span>&lt;<span class="type">ValueType</span>, <span class="type">ReferenceType</span>, <span class="type">HashType</span>&gt; <i>other</i>) const</h3>
+<p>Returns <code>true</code> if <i>other</i> points to the same element in the same <a href="adb-hash.html">adb::Hash</a>.</p>
+<!-- @@@operator== -->
+</div>
+<hr><p>© 2018 <a href="https://github.com/Resurr3ction">Michael Vlach</a><p/></body>
+</html>

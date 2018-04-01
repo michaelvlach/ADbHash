@@ -1,7 +1,7 @@
 /*!
 \class adb::Hash
 \brief The \l {Hash}<Key, Value, DataType, HashFunction> class provides multi-hash table.
-\inmodule ADbHash
+\inmodule ADbHashModule
 
 It is a template class that can be customized with
 custom \c DataType and \c HashFunction. The supplied
@@ -29,7 +29,7 @@ example in-file storage.
 
 The \c Hash provides dual API to be used as regular
 hash table or as a multi-hash table - multiple values
-associated to the same key.
+associated with the same key.
 
 \b {Manipulating Data}
 

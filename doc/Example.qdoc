@@ -1,0 +1,45 @@
+/*!
+\class adb::IdentityHash
+\inmodule ADbHashModule
+\brief The \l {IdentityHash}<Value> class provides identity hashing for \l adb::Hash
+
+It is suited for integer key types and types
+convertible to \l {http://en.cppreference.com/w/cpp/types/integer}{uint64_t}.
+*/
+
+/*!
+\typedef adb::ADbHash
+\inmodule ADbHashModule
+
+Convenience type alias for \l adb::Hash declared as
+
+\code
+template<typename Key, typename Value, typename HashFunction = adb::IdentityHash<Key>>
+using ADbHash = Hash<Key, Value, Data<Key, Value>, HashFunction>;
+\endcode
+
+Usage example:
+
+\code
+adb::ADbHash<int, int> map;
+adb::ADbHash<std::string, std::string, MyHashingFunctor> map2;
+\endcode
+
+that would be equivalent to the full declaration:
+
+\code
+adb::Hash<int, int, adb::Data<int, int>, adb::IdentityHash<int>> hash;
+\endcode
+*/
+
+/*!
+\fn template<typename Value> adb::IdentityHash<Value>::IdentityHash(Value value)
+
+Constructs \l IdentityHash with internal \a value.
+*/
+
+/*!
+\fn template<typename Value> adb::IdentityHash<Value>::operator uint64_t() const
+
+Statically casts internal \c value to \l {http://en.cppreference.com/w/cpp/types/integer}{uint64_t}.
+*/

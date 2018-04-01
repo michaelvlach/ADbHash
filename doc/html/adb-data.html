@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Data.qdoc -->
+  <title>Data Class | ADbHash 1.0</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="adbhash-module.html">ADbHash</a></td><td ><a href="adb.html">adb Namespace</a></td><td >Data</td>        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Data Class</h1>
+<span class="small-subtitle">(<a href="adb-data.html">adb::Data</a>)<br/></span>
+<!-- $$$Data-brief -->
+<p>The <a href="adb-data.html">Data</a>&lt;Key, Value&gt; class provides in-memory key-value storage for <a href="adb-hash.html">adb::Hash</a>. <a href="#details">More...</a></p>
+<!-- @@@Data -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">   <span class="preprocessor">#include &lt;Data&gt;</span>
+</td></tr></table></div><ul>
+<li><a href="adb-data-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#Data">Data</a></b>(int64_t <i>dataSize</i>, int64_t <i>metaSize</i>, char <i>metaValue</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int64_t </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#dataSize">dataSize</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Key </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#key">key</a></b>(int64_t <i>index</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const char *</td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#metaData">metaData</a></b>(int64_t <i>index</i>, int64_t <i>size</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int64_t </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#metaSize">metaSize</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#resize">resize</a></b>(int64_t <i>dataSize</i>, int64_t <i>metaSize</i>, char <i>metaValue</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#setData">setData</a></b>(int64_t <i>index</i>, const Key &amp;<i>key</i>, const Value &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#setMetaData">setMetaData</a></b>(int64_t <i>index</i>, const std::vector&lt;char&gt; &amp;<i>values</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#setMetaValue">setMetaValue</a></b>(int64_t <i>index</i>, char <i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#setValue">setValue</a></b>(int64_t <i>index</i>, const Value &amp;<i>value</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Value </td><td class="memItemRight bottomAlign"><b><a href="adb-data.html#value">value</a></b>(int64_t <i>index</i>) const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$Data-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>The <a href="adb-data.html">Data</a>&lt;Key, Value&gt; class provides in-memory key-value storage for <a href="adb-hash.html">adb::Hash</a>.</p>
+<p>It stores data <code>Key-Value</code> pairs and meta data of type <code>char</code>. It is constructed with initial size of data, size of meta data and the default meta data value to initialize the meta data.</p>
+<p>The data is set using <a href="adb-data.html#setData">setData</a>(). If only a single value should be updated use <a href="adb-data.html#setValue">setValue</a>() instead. Data are retrieved with <a href="adb-data.html#key">key</a>() and <a href="adb-data.html#value">value</a>() respectively. Current data size is accesible with <a href="adb-data.html#dataSize">dataSize</a>().</p>
+<p>Meta data are <code>char</code> values that are independent from <code>Key-Value</code> data. To set meta data use one of the <a href="adb-data.html#setMetaData">setMetaData</a>() overloads. To retrieve meta data use <a href="adb-data.html#metaData">metaData</a>().</p>
+<p>The internal storage is not resized automatically and you cannot set (meta) data outside of current capacity obtained by <a href="adb-data.html#dataSize">dataSize</a>() and <a href="adb-data.html#metaSize">metaSize</a>() respectively. To change the capacity use <a href="adb-data.html#resize">resize</a>().</p>
+<p><b>Note: </b>The <code>Data</code> class is a thin wrapper around actual storage abstracting the internal mechanism so that any type of storage can be implemented with the same interface and plugged into <a href="adb-hash.html">adb::Hash</a>. As such it provides no iterators nor convenience functionality like automatic resizing in order to keep it as minimal as possible.</p></div>
+<!-- @@@Data -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$Data[overload1]$$$Dataint64_tint64_tchar -->
+<h3 class="fn" id="Data"><a name="Data"></a>Data::<span class="name">Data</span>(<span class="type">int64_t</span> <i>dataSize</i>, <span class="type">int64_t</span> <i>metaSize</i>, <span class="type">char</span> <i>metaValue</i>)</h3>
+<p>Constructs <code>Data</code> object with given <i>dataSize</i> and <i>metaSize</i>. The meta data will be initialized to <i>metaValue</i>.</p>
+<p><b>See also </b><a href="adb-data.html#setData">setData</a>().</p>
+<!-- @@@Data -->
+<!-- $$$dataSize[overload1]$$$dataSize -->
+<h3 class="fn" id="dataSize"><a name="dataSize"></a><span class="type">int64_t</span> Data::<span class="name">dataSize</span>() const</h3>
+<p>Returns current data <code>size</code>.</p>
+<!-- @@@dataSize -->
+<!-- $$$key[overload1]$$$keyint64_t -->
+<h3 class="fn" id="key"><a name="key"></a><span class="type">Key</span> Data::<span class="name">key</span>(<span class="type">int64_t</span> <i>index</i>) const</h3>
+<p>Returns <code>Key</code> stored at <i>index</i>. The <i>index</i> must be 0 &lt;= and &lt; <a href="adb-data.html#dataSize">dataSize</a>().</p>
+<!-- @@@key -->
+<!-- $$$metaData[overload1]$$$metaDataint64_tint64_t -->
+<h3 class="fn" id="metaData"><a name="metaData"></a>const <span class="type">char</span> *Data::<span class="name">metaData</span>(<span class="type">int64_t</span> <i>index</i>, <span class="type">int64_t</span> <i>size</i>) const</h3>
+<p>Returns <code>pointer</code> to meta data starting at <i>index</i>. The index must be valid (i.e&#x2e; 0 &lt;= and &lt; <a href="adb-data.html#metaSize">metaSize</a>()). The <i>size</i> parameter is unused and is provided for compatibility with different implementations that do not store the data in contiguous memory.</p>
+<p><b>See also </b><a href="adb-data.html#setMetaData">setMetaData</a>().</p>
+<!-- @@@metaData -->
+<!-- $$$metaSize[overload1]$$$metaSize -->
+<h3 class="fn" id="metaSize"><a name="metaSize"></a><span class="type">int64_t</span> Data::<span class="name">metaSize</span>() const</h3>
+<p>Returns current meta data <code>size</code>.</p>
+<!-- @@@metaSize -->
+<!-- $$$resize[overload1]$$$resizeint64_tint64_tchar -->
+<h3 class="fn" id="resize"><a name="resize"></a><span class="type">void</span> Data::<span class="name">resize</span>(<span class="type">int64_t</span> <i>dataSize</i>, <span class="type">int64_t</span> <i>metaSize</i>, <span class="type">char</span> <i>metaValue</i>)</h3>
+<p>Changes capacity expanding or truncating the internal storage to <i>dataSize</i> and <i>metaSize</i> respectively. If <i>metaSize</i> is greater than current <a href="adb-data.html#metaSize">metaSize</a>() the new values are initialized to <i>metaValue</i>.</p>
+<!-- @@@resize -->
+<!-- $$$setData[overload1]$$$setDataint64_tconstKey&constValue& -->
+<h3 class="fn" id="setData"><a name="setData"></a><span class="type">void</span> Data::<span class="name">setData</span>(<span class="type">int64_t</span> <i>index</i>, const <span class="type">Key</span> &amp;<i>key</i>, const <span class="type">Value</span> &amp;<i>value</i>)</h3>
+<p>Sets data at <i>index</i> to <i>key</i> and <i>value</i> pair. The <i>index</i> must be valid (i.e&#x2e; 0 &lt;= and &lt; <a href="adb-data.html#dataSize">dataSize</a>()).</p>
+<!-- @@@setData -->
+<!-- $$$setMetaData[overload1]$$$setMetaDataint64_tconststd::vector<char>& -->
+<h3 class="fn" id="setMetaData"><a name="setMetaData"></a><span class="type">void</span> Data::<span class="name">setMetaData</span>(<span class="type">int64_t</span> <i>index</i>, const <span class="type">std::vector</span>&lt;<span class="type">char</span>&gt; &amp;<i>values</i>)</h3>
+<p>Sets meta values starting at <i>index</i> to <i>values</i>. The <i>index</i> + size of <i>values</i> must be within current meta data capacity (i.e&#x2e; &lt; <a href="adb-data.html#metaSize">metaSize</a>()).</p>
+<p><b>See also </b><a href="adb-data.html#metaData">metaData</a>().</p>
+<!-- @@@setMetaData -->
+<!-- $$$setMetaValue[overload1]$$$setMetaValueint64_tchar -->
+<h3 class="fn" id="setMetaValue"><a name="setMetaValue"></a><span class="type">void</span> Data::<span class="name">setMetaValue</span>(<span class="type">int64_t</span> <i>index</i>, <span class="type">char</span> <i>value</i>)</h3>
+<p>Sets meta value at <i>index</i> to <i>value</i>. The <i>index</i> must be valid (i.e&#x2e; 0 &lt;= and &lt; <a href="adb-data.html#metaSize">metaSize</a>()).</p>
+<!-- @@@setMetaValue -->
+<!-- $$$setValue[overload1]$$$setValueint64_tconstValue& -->
+<h3 class="fn" id="setValue"><a name="setValue"></a><span class="type">void</span> Data::<span class="name">setValue</span>(<span class="type">int64_t</span> <i>index</i>, const <span class="type">Value</span> &amp;<i>value</i>)</h3>
+<p>Sets value at <i>index</i> to <i>value</i>. The <i>index</i> must be valid (i.e&#x2e; 0 &lt;= and &lt; <a href="adb-data.html#dataSize">dataSize</a>()).</p>
+<p><b>See also </b><a href="adb-data.html#value">value</a>().</p>
+<!-- @@@setValue -->
+<!-- $$$value[overload1]$$$valueint64_t -->
+<h3 class="fn" id="value"><a name="value"></a><span class="type">Value</span> Data::<span class="name">value</span>(<span class="type">int64_t</span> <i>index</i>) const</h3>
+<p>Returns <code>Value</code> at <i>index</i>. The <i>index</i> must be valid (i.e&#x2e; 0 &lt;= and &lt; <a href="adb-data.html#dataSize">dataSize</a>()).</p>
+<p><b>See also </b><a href="adb-data.html#setValue">setValue</a>().</p>
+<!-- @@@value -->
+</div>
+<hr><p>© 2018 <a href="https://github.com/Resurr3ction">Michael Vlach</a><p/></body>
+</html>

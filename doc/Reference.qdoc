@@ -1,7 +1,7 @@
 /*!
 \class adb::Reference
 \brief The \l {Reference}<T, Data> class provides custom reference wrapper.
-\inmodule ADbHash
+\inmodule ADbHashModule
 
 It facilitates \l operator=() for values that
 cannot rely on standard references (e.g. values stored

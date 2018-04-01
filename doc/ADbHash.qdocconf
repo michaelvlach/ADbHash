@@ -1,5 +1,7 @@
 include($QTDIR/doc/global/qt-html-templates-offline.qdocconf)
 
+defines                          = Q_CLANG_QDOC
+outputdir                        = html
 project                          = ADbHash
 description                      = ADbHash is fast C++ hash table.
 headerdirs                      += ..
@@ -11,7 +13,8 @@ moduleheader                     = ADbHash.h
 includepaths                     = ../include \
                                    ../include/adb
 
-navigation.homepage              = ADbHash
+navigation.homepage              = ADbHashModule
+navigation.homepagetitle         = ADbHash Module
 navigation.cppclassespage        = adb
 navigation.cppclassestitle       = adb Namespace
 

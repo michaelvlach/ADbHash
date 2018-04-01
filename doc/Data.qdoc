@@ -1,9 +1,9 @@
 /*!
 \class adb::Data
 \brief The \l {Data}<Key, Value> class provides in-memory key-value storage for \l adb::Hash.
-\inmodule ADbHash
+\inmodule ADbHashModule
 
-It stores data \c {Key-Value} pairs and meta data of
+It stores \c {Key-Value} pairs and meta data of
 type \c char. It is constructed with initial size
 of data, size of meta data and the default meta
 data value to initialize the meta data.
