@@ -180,7 +180,7 @@ void HashTest::contains_value_data()
     QTest::newRow("Empty hash should not contain any key-value pair") << Setup::None << qint64(1) << qint64(1100) << false;
     QTest::newRow("Hash with data should contain the key-value pair") << Setup::Data << qint64(1) << qint64(1100) << true;
     QTest::newRow("Hash with removed data should not contain removed key-value pair") << Setup::Removed << qint64(1) << qint64(1100) << false;
-    QTest::newRow("Hash with multi key data should contain the key-value pair") << Setup::Multi << qint64(12) << qint64(10) << true;
+    QTest::newRow("Hash with multi key data should contain the key-value pair") << Setup::Multi << qint64(12) << qint64(6) << true;
 }
 
 void HashTest::count()
@@ -216,6 +216,27 @@ void HashTest::count_key_data()
     QTest::newRow("Hash with data should have the count of the key 1") << Setup::Data << qint64(12) << qint64(1);
     QTest::newRow("Hash with removed data should should have count of removed key 0") << Setup::Removed << qint64(1) << qint64(0);
     QTest::newRow("Hash with multi key data should should have count of the key 3") << Setup::Multi << qint64(12) << qint64(3);
+}
+
+void HashTest::count_key_value()
+{
+    QFETCH(qint64, key);
+    QFETCH(qint64, value);
+
+    QTEST(mHash.count(key, value), COUNT);
+}
+
+void HashTest::count_key_value_data()
+{
+    QTest::addColumn<Setup>(SETUP);
+    QTest::addColumn<qint64>(KEY);
+    QTest::addColumn<qint64>(VALUE);
+    QTest::addColumn<qint64>(COUNT);
+
+    QTest::newRow("Empty hash should have count of the key-value 0") << Setup::None << qint64(12) << qint64(6) << qint64(0);
+    QTest::newRow("Hash with data should have the count of the key-value 1") << Setup::Data << qint64(12) << qint64(2200) << qint64(1);
+    QTest::newRow("Hash with removed data should should have count of removed key-value 0") << Setup::Removed << qint64(1) << qint64(1100) << qint64(0);
+    QTest::newRow("Hash with multi key data should should have count of the key-value 3") << Setup::Multi << qint64(12) << qint64(6) << qint64(3);
 }
 
 void HashTest::insert()
@@ -355,10 +376,11 @@ void HashTest::replace()
 {
     QFETCH(qint64, key);
     QFETCH(qint64, value);
+    QFETCH(qint64, count);
 
-    mHash.replace(key, value);
-
+    QCOMPARE(mHash.replace(key, value), count);
     QCOMPARE(mHash.value(key), value);
+    QCOMPARE(mHash.count(key, value), count);
 }
 
 void HashTest::replace_data()
@@ -366,9 +388,10 @@ void HashTest::replace_data()
     QTest::addColumn<Setup>(SETUP);
     QTest::addColumn<qint64>(KEY);
     QTest::addColumn<qint64>(VALUE);
+    QTest::addColumn<qint64>(COUNT);
 
-    QTest::newRow("Replacing existing key should overwrite the value") << Setup::Data << qint64(1) << qint64(200000);
-    QTest::newRow("Replacing existing key of multi-valued key should overwrite a value") << Setup::Multi << qint64(12) << qint64(200000);
+    QTest::newRow("Replacing existing key should overwrite the value") << Setup::Data << qint64(1) << qint64(200000) << qint64(1);
+    QTest::newRow("Replacing existing key of multi-valued key should overwrite all values") << Setup::Multi << qint64(12) << qint64(200000) << qint64(3);
 }
 
 void HashTest::replace_old_value()
@@ -376,11 +399,11 @@ void HashTest::replace_old_value()
     QFETCH(qint64, key);
     QFETCH(qint64, oldValue);
     QFETCH(qint64, value);
+    QFETCH(qint64, count);
 
-    mHash.replace(key, oldValue, value);
-
-    QVERIFY(!mHash.contains(key, oldValue));
-    QVERIFY(mHash.contains(key, value));
+    QCOMPARE(mHash.replace(key, oldValue, value), count);
+    QCOMPARE(mHash.count(key, oldValue), 0);
+    QCOMPARE(mHash.count(key, value), count);
 }
 
 void HashTest::replace_old_value_data()
@@ -389,8 +412,9 @@ void HashTest::replace_old_value_data()
     QTest::addColumn<qint64>(KEY);
     QTest::addColumn<qint64>(OLD_VALUE);
     QTest::addColumn<qint64>(VALUE);
+    QTest::addColumn<qint64>(COUNT);
 
-    QTest::newRow("Replacing existing key-value pair of multi-valued key should overwrite a value correctly") << Setup::Multi << qint64(12) << qint64(8) << qint64(200000);
+    QTest::newRow("Replacing existing key-value pair of multi-valued key should overwrite all value correctly") << Setup::Multi << qint64(12) << qint64(6) << qint64(200000) << qint64(3);
 }
 
 void HashTest::remove()
@@ -400,7 +424,8 @@ void HashTest::remove()
 
     for(qint64 i = 0; i < count; i++, key++)
     {
-        mHash.remove(key);
+        qint64 count = mHash.count(key);
+        QCOMPARE(mHash.remove(key), count);
         QCOMPARE(mHash.contains(key), false);
     }
 
@@ -430,10 +455,10 @@ void HashTest::remove_value()
 
     QVERIFY(mHash.contains(key, value));
 
-    mHash.remove(key, value);
+    qint64 count = mHash.count(key, value);
+    QCOMPARE(mHash.remove(key, value), count);
 
     QVERIFY(!mHash.contains(key, value));
-    QTEST(mHash.contains(key), RESULT);
 }
 
 void HashTest::remove_value_data()
@@ -441,10 +466,9 @@ void HashTest::remove_value_data()
     QTest::addColumn<Setup>(SETUP);
     QTest::addColumn<qint64>(KEY);
     QTest::addColumn<qint64>(VALUE);
-    QTest::addColumn<bool>(RESULT);
 
-    QTest::newRow("Remove key-value pair from a hash with data should remove it") << Setup::Data << qint64(1) << qint64(1100) << false;
-    QTest::newRow("Remove key-value pair od multi-valued key should remove only that instance") << Setup::Multi << qint64(12) << qint64(8) << true;
+    QTest::newRow("Remove key-value pair from a hash with data should remove it") << Setup::Data << qint64(1) << qint64(1100);
+    QTest::newRow("Remove key-value pair od multi-valued key should remove all instances") << Setup::Multi << qint64(12) << qint64(6);
 }
 
 void HashTest::value()
@@ -487,7 +511,7 @@ void HashTest::values_data()
 
     QTest::newRow("Empty hash should return empty list of values") << Setup::None << qint64(0) << QVector<qint64>();
     QTest::newRow("Hash with data should return values associated with the key") << Setup::Data << qint64(1) << QVector<qint64>{1100};
-    QTest::newRow("Hash with multi-valued key should return all values associated with it") << Setup::Multi << qint64(12) << QVector<qint64>{6, 8, 10};
+    QTest::newRow("Hash with multi-valued key should return all values associated with it") << Setup::Multi << qint64(12) << QVector<qint64>{6, 6, 6};
 }
 
 QVector<QPair<qint64, qint64>> HashTest::createValues()
@@ -580,8 +604,8 @@ QVector<QPair<qint64, qint64>> HashTest::createMultiHashValues()
         {4, 2},
         {8, 4},
         {12, 6},
-        {12, 8},
-        {12, 10},
+        {12, 6},
+        {12, 6},
         {24, 12},
         {28, 14},
         {32, 16},

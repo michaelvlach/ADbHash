@@ -37,7 +37,7 @@ public:
 
     const_iterator(int index, const BitMask<T> &mask);
 
-    const_iterator operator++();
+    const_iterator &operator++();
     const_iterator operator++(int);
     value_type operator*() const;
     bool operator==(const_iterator other) const;
@@ -80,7 +80,7 @@ BitMask<T>::const_iterator::const_iterator(int index, const BitMask<T> &mask) :
 }
 
 template<typename T>
-auto BitMask<T>::const_iterator::operator++() -> const_iterator
+auto BitMask<T>::const_iterator::operator++() -> const_iterator &
 {
     mIndex = mMask.findNext(mIndex);
     return *this;

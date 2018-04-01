@@ -14,10 +14,10 @@ namespace adb
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 class Hash
 {
+public:
     template<typename ValueType, typename ReferenceType, typename HashType>
     class iterator_base;
 
-public:
     using iterator = iterator_base<Value, Reference<Value, DataType>, Hash>;
     using const_iterator = iterator_base<const Value, const Reference<const Value, const DataType>, const Hash>;
 
@@ -32,6 +32,7 @@ public:
     bool contains(const Key &key, const Value &value) const;
     int64_t count() const;
     int64_t count(const Key &key) const;
+    int64_t count(const Key &key, const Value &value) const;
     iterator end();
     const_iterator erase(const_iterator it);
     iterator erase(iterator it);
@@ -43,10 +44,10 @@ public:
     bool isEmpty() const;
     Reference<Value, DataType> operator[](const Key &key);
     Value operator[](const Key &key) const;
-    void replace(const Key &key, const Value &newValue);
-    void replace(const Key &key, const Value &oldValue, const Value &newValue);
-    void remove(const Key &key);
-    void remove(const Key &key, const Value &value);
+    int64_t replace(const Key &key, const Value &newValue);
+    int64_t replace(const Key &key, const Value &oldValue, const Value &newValue);
+    int64_t remove(const Key &key);
+    int64_t remove(const Key &key, const Value &value);
     Value value(const Key &key, const Value &defaultValue = Value()) const;
     std::vector<Value> values(const Key &key) const;
 
@@ -128,7 +129,7 @@ public:
     using iterator_category = std::bidirectional_iterator_tag;
 
     iterator_base() = default;
-    iterator_base(int64_t index, HashType *data);
+    iterator_base(int64_t index, HashType *hash);
 
     iterator_base &operator++();
     iterator_base operator++(int);
@@ -205,13 +206,19 @@ int64_t Hash<Key, Value, DataType, HashFunction>::count(const Key &key) const
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
+int64_t Hash<Key, Value, DataType, HashFunction>::count(const Key &key, const Value &value) const
+{
+    return findAll(key, value).size();
+}
+
+template<typename Key, typename Value, typename DataType, typename HashFunction>
 auto Hash<Key, Value, DataType, HashFunction>::end() -> iterator
 {
     return iterator(capacity(), this);
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
-auto Hash<Key, Value, DataType, HashFunction>::erase(Hash<Key, Value, DataType, HashFunction>::const_iterator it) -> const_iterator
+auto Hash<Key, Value, DataType, HashFunction>::erase(const_iterator it) -> const_iterator
 {
     eraseAt(it.mIndex);
     return ++it;
@@ -278,39 +285,63 @@ Value Hash<Key, Value, DataType, HashFunction>::operator[](const Key &key) const
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
-void Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &newValue)
+int64_t Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &newValue)
 {
-    const int64_t pos = findIndex(key);
+    int64_t replaced = 0;
 
-    if(pos != capacity())
-        mData.setValue(pos, newValue);
-}
-
-template<typename Key, typename Value, typename DataType, typename HashFunction>
-void Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &oldValue, const Value &newValue)
-{
-    const int64_t pos = findIndex(key, oldValue);
-
-    if(pos != capacity())
-        mData.setData(pos, key, newValue);
-}
-
-template<typename Key, typename Value, typename DataType, typename HashFunction>
-void Hash<Key, Value, DataType, HashFunction>::remove(const Key &key)
-{
     for(int64_t pos : findAll(key))
-        eraseAt(pos);
+    {
+        mData.setValue(pos, newValue);
+        replaced++;
+    }
 
-    rehash();
+    return replaced;
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
-void Hash<Key, Value, DataType, HashFunction>::remove(const Key &key, const Value &value)
+int64_t Hash<Key, Value, DataType, HashFunction>::replace(const Key &key, const Value &oldValue, const Value &newValue)
 {
-    for(int64_t pos : findAll(key, value))
+    int64_t replaced = 0;
+
+    for(int64_t pos : findAll(key, oldValue))
+    {
+        mData.setValue(pos, newValue);
+        replaced++;
+    }
+
+    return replaced;
+}
+
+template<typename Key, typename Value, typename DataType, typename HashFunction>
+int64_t Hash<Key, Value, DataType, HashFunction>::remove(const Key &key)
+{
+    int64_t removed = 0;
+
+    for(int64_t pos : findAll(key))
+    {
         eraseAt(pos);
+        removed++;
+    }
 
     rehash();
+
+    return removed;
+}
+
+template<typename Key, typename Value, typename DataType, typename HashFunction>
+int64_t Hash<Key, Value, DataType, HashFunction>::remove(const Key &key, const Value &value)
+{
+    int64_t removed = 0;
+
+    for(int64_t pos : findAll(key, value))
+    {
+        eraseAt(pos);
+        removed++;
+    }
+
+    rehash();
+
+    return removed;
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
@@ -697,9 +728,9 @@ char Hash<Key, Value, DataType, HashFunction>::takeMetaValue(int64_t index)
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 template<typename ValueType, typename ReferenceType, typename HashType>
-Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::iterator_base(int64_t index, HashType *data) :
+Hash<Key, Value, DataType, HashFunction>::iterator_base<ValueType, ReferenceType, HashType>::iterator_base(int64_t index, HashType *hash) :
     mIndex(index),
-    mHash(data)
+    mHash(hash)
 {
 }
 

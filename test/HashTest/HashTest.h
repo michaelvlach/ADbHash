@@ -45,6 +45,8 @@ private slots:
     void count_data();
     void count_key();
     void count_key_data();
+    void count_key_value();
+    void count_key_value_data();
     void insert();
     void insert_data();
     void isEmpty();

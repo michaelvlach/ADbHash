@@ -47,7 +47,7 @@ Constructs \l const_iterator with \a index and \a mask.
 */
 
 /*!
-\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++() -> const_iterator
+\fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++() -> const_iterator &
 
 Searches forward for the position of next set bit
 and returns itself.
@@ -56,7 +56,7 @@ and returns itself.
 /*!
 \fn template<typename T> auto adb::BitMask<T>::const_iterator::operator++(int) -> const_iterator
 
-Same as operator++() but returns copy of itself
+Same as \l operator++() but returns copy of itself
 \b before the search.
 */
 
