@@ -10,7 +10,7 @@ Really fast header-only C++ hash table (map).
 ```cpp
 #include <ADbHash.h>
 
-ADbHash<int, std::string> map;
+adb::ADbHash<int, std::string> map;
 map[1] = "Hello";
 map[2] = "World";
 ```

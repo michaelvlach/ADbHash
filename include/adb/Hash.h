@@ -5,7 +5,6 @@
 #include "SIMD.h"
 
 #include <cstdint>
-#include <initializer_list>
 #include <iterator>
 #include <vector>
 
