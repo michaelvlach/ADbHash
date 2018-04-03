@@ -25,8 +25,8 @@ public:
 private:
     struct Node
     {
-        Key key;
-        Value value;
+        Key key = {};
+        Value value = {};
     };
 
     std::vector<Node> mData;
