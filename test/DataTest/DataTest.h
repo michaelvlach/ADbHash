@@ -31,6 +31,8 @@ public:
 private slots:
     void init();
 
+    void count();
+    void count_data();
     void dataSize();
     void dataSize_data();
     void key();
@@ -41,6 +43,8 @@ private slots:
     void metaSize_data();
     void resize();
     void resize_data();
+    void setCount();
+    void setCount_data();
     void setData();
     void setData_data();
     void setMetaData();

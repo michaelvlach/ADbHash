@@ -11,11 +11,13 @@ class Data
 public:
     Data(int64_t dataSize, int64_t metaSize, char metaValue);
 
+    int64_t count() const;
     int64_t dataSize() const;
     Key key(int64_t index) const;
     const char *metaData(int64_t index, int64_t size) const;
     int64_t metaSize() const;
     void resize(int64_t dataSize, int64_t metaSize, char metaValue);
+    void setCount(int64_t count);
     void setData(int64_t index, const Key &key, const Value &value);
     void setMetaData(int64_t index, const std::vector<char> &values);
     void setMetaValue(int64_t index, char value);
@@ -25,10 +27,11 @@ public:
 private:
     struct Node
     {
-        Key key;
-        Value value;
+        Key key = {};
+        Value value = {};
     };
 
+    int64_t mCount = 0;
     std::vector<Node> mData;
     std::vector<char> mMetaData;
 };
@@ -38,6 +41,12 @@ Data<Key, Value>::Data(int64_t dataSize, int64_t metaSize, char metaValue) :
     mData(static_cast<size_t>(dataSize)),
     mMetaData(static_cast<size_t>(metaSize), metaValue)
 {
+}
+
+template<typename Key, typename Value>
+int64_t Data<Key, Value>::count() const
+{
+    return mCount;
 }
 
 template<typename Key, typename Value>
@@ -70,6 +79,12 @@ void Data<Key, Value>::resize(int64_t dataSize, int64_t metaSize, char metaValue
 {
     mData.resize(static_cast<size_t>(dataSize));
     mMetaData.resize(static_cast<size_t>(metaSize), metaValue);
+}
+
+template<typename Key, typename Value>
+void Data<Key, Value>::setCount(int64_t count)
+{
+    mCount = count;
 }
 
 template<typename Key, typename Value>
