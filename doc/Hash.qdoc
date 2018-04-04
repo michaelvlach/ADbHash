@@ -12,11 +12,13 @@ custom \c DataType and \c HashFunction. The supplied
 
 \list
 \li \c {DataType(int64_t dataSize, int64_t metaSize, char metaValue, T... args)}
+\li \c {int64_t count() const}
 \li \c {int64_t dataSize() const}
 \li \c {Key key(int64_t index) const}
 \li \c {const char *metaData(int64_t index, int64_t size) const}
 \li \c {int64_t metaSize() const}
 \li \c {void resize(int64_t dataSize, int64_t metaSize, char metaValue)}
+\li \c {void setCount(int64_t count)}
 \li \c {void setData(int64_t index, const Key &key, const Value &value)}
 \li \c {void setMetaData(int64_t index, const std::vector<char> &values)}
 \li \c {void setMetaValue(int64_t index, char value)}

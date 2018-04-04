@@ -112,7 +112,6 @@ private:
     char takeMetaValue(int64_t index);
 
     static constexpr int64_t GROUP_SIZE = 16;
-    int64_t mCount = 0;
     DataType mData = DataType(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaValues::Empty));
 };
 
@@ -177,7 +176,7 @@ void Hash<Key, Value, DataType, HashFunction>::clear()
 {
     mData.resize(GROUP_SIZE, GROUP_SIZE * 2, static_cast<char>(MetaValues::Empty));
     mData.setMetaData(0, std::vector<char>(GROUP_SIZE * 2, static_cast<char>(MetaValues::Empty)));
-    mCount = 0;
+    mData.setCount(0);
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
@@ -195,7 +194,7 @@ bool Hash<Key, Value, DataType, HashFunction>::contains(const Key &key, const Va
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 int64_t Hash<Key, Value, DataType, HashFunction>::count() const
 {
-    return mCount;
+    return mData.count();
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
@@ -257,7 +256,7 @@ auto Hash<Key, Value, DataType, HashFunction>::find(const Key &key, const Value 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 auto Hash<Key, Value, DataType, HashFunction>::insert(const Key &key, const Value &value) -> iterator
 {
-    mCount++;
+    mData.setCount(mData.count() + 1);
     rehash();
     const uint64_t hash = HashFunction(key);
     return iterator(insertData(findEmpty(hashIndex(hash, capacity())), key, value, hashMetaValue(hash)), this);
@@ -383,7 +382,7 @@ template<typename Key, typename Value, typename DataType, typename HashFunction>
 void Hash<Key, Value, DataType, HashFunction>::eraseAt(int64_t index)
 {
     setMetaValue(index, deleteMetaValue(index));
-    mCount--;
+    mData.setCount(mData.count() - 1);
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
@@ -544,7 +543,7 @@ int64_t Hash<Key, Value, DataType, HashFunction>::insertData(int64_t index, cons
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 bool Hash<Key, Value, DataType, HashFunction>::isBewloMinCount() const
 {
-    return mCount < minCount();
+    return mData.count() < minCount();
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
@@ -574,7 +573,7 @@ bool Hash<Key, Value, DataType, HashFunction>::isDeleted(int64_t index) const
 template<typename Key, typename Value, typename DataType, typename HashFunction>
 bool Hash<Key, Value, DataType, HashFunction>::isOverMaxCount() const
 {
-    return mCount >= maxCount();
+    return mData.count() >= maxCount();
 }
 
 template<typename Key, typename Value, typename DataType, typename HashFunction>
