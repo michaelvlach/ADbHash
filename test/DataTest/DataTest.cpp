@@ -54,8 +54,23 @@ void DataTest::init()
         for(const Node &node : DATA_VALUES)
             mData.setData(&node - DATA_VALUES.begin(), node.key, node.value);
         mData.setMetaData(0, META_VALUES.toStdVector());
+        mData.setCount(DATA_SIZE);
         break;
     }
+}
+
+void DataTest::count()
+{
+    QTEST(mData.count(), COUNT);
+}
+
+void DataTest::count_data()
+{
+    QTest::addColumn<Setup>(SETUP);
+    QTest::addColumn<int64_t>(COUNT);
+
+    QTest::newRow("Empty data shoul have 0 count") << Setup::Empty << int64_t(0);
+    QTest::newRow("Data with values should have correct count") << Setup::Data << DATA_SIZE;
 }
 
 void DataTest::dataSize()
@@ -146,8 +161,25 @@ void DataTest::resize_data()
     QTest::addColumn<char>(VALUE);
 
     QTest::newRow("Resizing zero sized data should add new default initialized data") << Setup::None << DATA_SIZE << META_SIZE << META_VALUE;
-    QTest::newRow("Resizing empty data should add new default initialized data") << Setup::Empty <<(DATA_SIZE * 2) << (DATA_SIZE * 2 + 16) << META_VALUE;
-    QTest::newRow("Resizing data with values should add new default initialized data without changing existing data") << Setup::Data <<(DATA_SIZE * 2) << (DATA_SIZE * 2 + 16) << META_VALUE;
+    QTest::newRow("Resizing empty data should add new default initialized data") << Setup::Empty << (DATA_SIZE * 2) << (DATA_SIZE * 2 + 16) << META_VALUE;
+    QTest::newRow("Resizing data with values should add new default initialized data without changing existing data") << Setup::Data << (DATA_SIZE * 2) << (DATA_SIZE * 2 + 16) << META_VALUE;
+}
+
+void DataTest::setCount()
+{
+    QFETCH(int64_t, count);
+
+    mData.setCount(count);
+    QCOMPARE(mData.count(), count);
+}
+
+void DataTest::setCount_data()
+{
+    QTest::addColumn<Setup>(SETUP);
+    QTest::addColumn<int64_t>(COUNT);
+
+    QTest::newRow("Set count should set the 0 count to a new value") << Setup::Empty << int64_t(10);
+    QTest::newRow("Set count should update the value to a new value") << Setup::Data << int64_t(10);
 }
 
 void DataTest::setData()

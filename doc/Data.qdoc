@@ -41,6 +41,12 @@ to \a metaValue.
 */
 
 /*!
+\fn template<typename Key, typename Value> int64_t adb::Data<Key, Value>::count() const
+
+Returns currently set \c count stored in the data's internal storage.
+*/
+
+/*!
 \fn template<typename Key, typename Value> int64_t adb::Data<Key, Value>::dataSize() const
 
 Returns current data \c size.
@@ -77,6 +83,12 @@ internal storage to \a dataSize and \a metaSize
 respectively. If \a metaSize is greater than
 current metaSize() the new values are initialized
 to \a metaValue.
+*/
+
+/*!
+\fn template<typename Key, typename Value> int64_t adb::Data<Key, Value>::setCount(int64_t count)
+
+Stores \a count in the data's internal storage.
 */
 
 /*!
